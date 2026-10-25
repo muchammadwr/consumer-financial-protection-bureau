@@ -78,66 +78,47 @@ Derived directly from the background above, the objectives are:
 
 
 
-## 6. Key Findings
+## 5. Key Findings
 
 
 ---
 
-### Finding 1 — 250K Sessions Lost Per Cycle: The Problem Isn't the Ads, It's the Platform
+### Finding 1 — 
+**The insight:**
 
-
- 
-**The insight:** Near-identical rates across all five channels eliminate ad quality as the root cause. Anonymous users hit a mandatory registration wall at the exact moment of highest purchase intent. This is a platform-level architectural barrier — not a media planning problem.
-
-**Why it matters:** Approximately **250,000 sessions per cycle** are abandoned at the product page. These users are already on the platform, already paid for. Any improvement here requires zero additional acquisition spend.
+**Why it matters:** 
 
 ---
 
-### Finding 2 — Same Audience, Every Channel: Budget Reallocation Won't Fix This
+### Finding 2 — 
 
-
-
-
-**The insight:** The platform attracts the same audience composition regardless of channel. Shifting budget from Email to Adwords or Facebook does not change the type of user arriving — and therefore does not change the conversion outcome.
- 
-**Why it matters:** This suggests that the root cause is structural — the fix likely resides in product and engineering rather than media planning. Email's position as highest-volume channel makes it the single largest immediate opportunity — improving the Anonymous conversion experience on Email-sourced sessions alone could impact 224K sessions per cycle.
+**The insight:** 
+**Why it matters:** 
 
 ---
 
-### Finding 3 — $331K Revenue in Active Deterioration (and $226K More Approaching the Edge)
-
+### Finding 3 — 
 
 **The insight:**
 
-- At Risk and Cant Lose Them together contribute approximately **$331K (29.8% of total revenue)** despite showing prolonged inactivity patterns, making them the platform's most immediate retention priority.
-- Loyal Customers remain active and contribute an additional **$226K (20.4%)**, but their purchase-gap behavior suggests a portion of the segment may require preventive engagement before transitioning into higher-risk inactivity patterns.
-- Rather than interpreting this as guaranteed future revenue loss, the analysis highlights where retention monitoring and intervention efforts are likely to have the highest business relevance.
+---
+
+### Finding 4 — 
+
+
+**The insight:** 
+
+**Why it matters:** 
 
 ---
 
-### Finding 4 — The Behavioral Clock: At Risk Customers Have Already Churned
+### Finding 5 — 
 
 
-**The insight:** At Risk customers are not "buying less often" — at 480 days vs the 91-day Champions benchmark, they exhibit behavioral patterns consistent with advanced disengagement. They simply haven't been classified as lost yet. The difference between Champions and At Risk suggests a meaningful behavioral shift rather than a simple gradual decline in activity.
- 
-**Why it matters:** Interval data determines intervention timing across all phases. Loyal Customers should be contacted at day 150 — before the 188-day threshold, not after.
+**The insight:** 
 
----
+**Why it matters:** 
 
-### Finding 5 — Category Affinity: The Personalization Map Already Exists in the Data
-
-
-**The insight:** At Risk customers were Jeans and Outerwear buyers before they became inactive. They are disengaged premium fashion buyers — not price-sensitive shoppers. A win-back email referencing their specific category ("Your favorite Jeans collection is waiting") is the right message, not a generic discount.
- 
-**Why it matters:** Precise sub-bucket targeting is possible without additional data collection. The personalization input already exists in purchase history — sub-buckets for At Risk: Jeans lovers · Fashion Hoodies lovers · Outerwear lovers.
-
----
-
-### Finding 6 — Dataset Constraint: Low Frequency Is an Artifact
-
-Even Champions average only 1.5 orders; Loyal Customers average 1.4. This is atypically low for fashion e-commerce — real-world Champions typically show 4–8+ orders per year.
-
-**Why this matters:** This reflects a limitation of the synthetic TheLook dataset, not actual retention performance. To avoid amplifying this artifact, all financial projections in this analysis use AOV (not CLV) as the multiplier. RFM scoring remains valid as a relative ranking tool within this dataset, but absolute frequency thresholds would need recalibration for real business data.
 
 ---
 
