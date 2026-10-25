@@ -143,18 +143,6 @@ Even Champions average only 1.5 orders; Loyal Customers average 1.4. This is aty
 
 ## 7. Dashboard
 
-Designed as a single narrative arc — not a daily monitoring tool, but a self-contained story flowing from problem identification to recommendation foundations.
-
-🔗 [Open Dashboard in Looker Studio →](https://datastudio.google.com/reporting/fe05a7e8-44a2-4b7b-b4dd-2d945c90b409)
-
-<img width="1020" alt="TheLook_E-commerce__Retention_ _Acquisition_Analysis_Dashboard" src="https://github.com/user-attachments/assets/b9e07b38-bc80-4fcc-be08-6ccecb83d599" />
-
-**Layout:**
-- **Top row** — 5 KPI scorecards: immediate executive summary before any chart is read
-- **Upper section** — Acquisition story: funnel drop-off per channel (left) + session volume by user type (right)
-- **Bottom left** — RFM Segment Bubble Map: revenue-at-risk in one view
-- **Bottom right** — Purchase interval per segment (center) + Category affinity heatmap (right)
-
 ---
 
 ## 8. Insights & Strategic Recommendations
