@@ -8,7 +8,7 @@
 
 1. [Business Understanding](#1-business-understanding)
 2. [Data Understanding](#2-data-understanding)
-4. [Data Cleaning](#4-data-cleaning)
+4. [Data Preparation](#4-data-preparation)
 5. [Key Findings](#6-key-findings)
 6. [Dashboard](#7-dashboard)
 7. [Insights & Recommendations](#8-insights--strategic-recommendations)
@@ -70,109 +70,22 @@ Derived directly from the background above, the objectives are:
 
 ---
 
-## 4. Data Cleaning
+## 4. Data Preparation
 
 ---
 
-## 5. Data Extraction & Feature Engineering
 
-### 5.1 RFM Base & Scoring
 
-RFM metrics are computed from `orders_cleaned` and `order_items_cleaned` filtered to `status = 'Complete'`.
 
-| Dimension | Definition | Scoring Logic |
-|---|---|---|
-| **Recency** | Days between reference date and user's last order date | NTILE(5) DESC — lower recency → score 5 |
-| **Frequency** | Count of distinct orders per user | NTILE(5) ASC — higher count → score 5 |
-| **Monetary** | Total sale_price per user | NTILE(5) ASC — higher value → score 5 |
-
-**avg_fm** = average of F and M scores, used as a combined proxy for customer value.
-
-**RFM Segmentation Rules:**
-
-| Segment | Condition |
-|---|---|
-| Champions | r=5, avg_fm ≥ 4 |
-| Loyal Customers | r≥3, avg_fm ≥ 4 |
-| Potential Loyalist | r≥4, avg_fm ≥ 2 |
-| New Customers | r=5, avg_fm < 2 |
-| Promising | r=4, avg_fm < 2 |
-| Need Attention | r=3, avg_fm ≥ 3 |
-| About to Sleep | r=3, avg_fm < 3 |
-| Cant Lose Them | r≤1, avg_fm ≥ 4 |
-| At Risk | r≤2, avg_fm ≥ 3 |
-| Hibernating | r≤2, avg_fm < 3 |
-
-> **Methodology note:** This RFM uses a 1-year historical window. Large purchase gaps in some segments (e.g. At Risk avg_gap of 480 days) reflect actual buying behavior over a long history and should be validated against real business operations before drawing conclusions.
-
-### 5.2 Acquisition Funnel
-
-The funnel is built from `events_cleaned` with **session_id** as the unit of analysis (not user_id).
-
-**User Type Classification:**
-- `Anonymous`: `user_id IS NULL` in events
-- `Registered Lead`: `user_id NOT NULL` in events but absent from `rfm_scores`
-- `Existing Buyer`: `user_id` exists in `rfm_scores`
-
-**Funnel Steps:**
-```
-Total Sessions
-    → Reached Home     (MAX has_home per session)
-    → Reached Product  (MAX has_product per session)
-    → Add to Cart      (MAX has_cart per session)
-    → Purchase         (MAX has_purchase per session)
-```
-
-**Denominator logic:** `product_to_cart_pct` = cart / product viewers (not total sessions), to accurately measure step-by-step conversion rates.
-
-### 5.3 Derived Metric: AOV per Segment
-
-AOV is calculated directly from completed transaction records using `SUM(sale_price) / COUNT(DISTINCT order_id)` per segment. The full reference table is included below and used as the financial multiplier across all projections in Section 8.
-
-| Segment | AOV | Total Orders | Total Revenue |
-|---|---|---|---|
-| At Risk | $105.24 | 2,548 | $268,156 |
-| Champions | $121.94 | 1,126 | $137,305 |
-| Cant Lose Them | $152.89 | 602 | $92,038 |
-| Loyal Customers | $128.88 | 1,827 | $235,466 |
-| Potential Loyalist | $71.39 | 3,080 | $219,874 |
-| Hibernating | $43.97 | 2,402 | $105,611 |
-| About to Sleep | $42.84 | 1,098 | $47,043 |
-
->*Note: Revenue figures here differ slightly from Section 6 due to stricter dual-status filtering at the transaction level. AOV calculations in Section 8 use this table exclusively.*
-
-### 5.4 Final Analytical Tables
-
-| Table | Contents | Used For |
-|---|---|---|
-| `rfm_scores` | RFM scores & segment per user | All retention analysis |
-| `convertion_rate_summary` | Funnel rates per traffic_source × user_type | Acquisition analysis |
-| `order_gap_summary` | Avg days between orders per segment | Purchase interval analysis |
-| `top_product_summary` | Top 3 categories per segment by revenue | Category affinity |
-| `value_summary` | CLV, total revenue, avg recency per segment | Revenue at risk quantification |
-| `aov_summary` | AOV per segment calculated from completed order items | Financial projections in Section 8 |
-
----
 
 ## 6. Key Findings
 
-EDA conducted in Google Colab with direct BigQuery connection. Full notebook: [Python for EDA →](https://colab.research.google.com/drive/1YXuW8Oy3rV-GknxEYwetqXd3Xl7fZ15n?usp=sharing)
 
 ---
 
 ### Finding 1 — 250K Sessions Lost Per Cycle: The Problem Isn't the Ads, It's the Platform
 
-<img width="1020" alt="EDA 1" src="https://github.com/user-attachments/assets/c2044f3c-2a82-47aa-851f-87e9cec65661" />
 
-Across ~500K Anonymous sessions, every traffic channel shows an identical pattern: product-to-cart conversion holds at ~50%, then cart-to-purchase collapses to exactly 0%.
- 
-| Traffic Source | Total Sessions | Product-to-Cart Rate | Cart-to-Purchase Rate |
-|---|---|---|---|
-| Adwords | 150,115 | 49.9% | 0.0% |
-| Email | 224,690 | 49.9% | 0.0% |
-| Facebook | 50,146 | 50.2% | 0.0% |
-| Organic | 24,994 | 50.1% | 0.0% |
-| YouTube | 50,055 | 49.9% | 0.0% |
  
 **The insight:** Near-identical rates across all five channels eliminate ad quality as the root cause. Anonymous users hit a mandatory registration wall at the exact moment of highest purchase intent. This is a platform-level architectural barrier — not a media planning problem.
 
@@ -182,12 +95,9 @@ Across ~500K Anonymous sessions, every traffic channel shows an identical patter
 
 ### Finding 2 — Same Audience, Every Channel: Budget Reallocation Won't Fix This
 
-<img width="1020" alt="EDA 3" src="https://github.com/user-attachments/assets/1b8160af-91cb-49a8-9993-ecf1a6b5428a" />
-<img width="1020" alt="EDA 2" src="https://github.com/user-attachments/assets/ee82561f-c05b-4055-9131-9d5cf622444f" />
 
 
-Email dominates volume (224,690 sessions), followed by Adwords (150,115). All other channels contribute ~50K each. Despite this volume difference, every channel shows a near-identical user-type split: ~73% Anonymous / ~22% Registered Lead / ~5% Existing Buyer — with less than 0.2 percentage point variance across all five.
- 
+
 **The insight:** The platform attracts the same audience composition regardless of channel. Shifting budget from Email to Adwords or Facebook does not change the type of user arriving — and therefore does not change the conversion outcome.
  
 **Why it matters:** This suggests that the root cause is structural — the fix likely resides in product and engineering rather than media planning. Email's position as highest-volume channel makes it the single largest immediate opportunity — improving the Anonymous conversion experience on Email-sourced sessions alone could impact 224K sessions per cycle.
@@ -196,17 +106,6 @@ Email dominates volume (224,690 sessions), followed by Adwords (150,115). All ot
 
 ### Finding 3 — $331K Revenue in Active Deterioration (and $226K More Approaching the Edge)
 
-<img width="1020" alt="EDA 4" src="https://github.com/user-attachments/assets/969892f1-532c-45d1-8c2a-16a86eacd4af" />
-
-The bubble map positions each segment across revenue (Y-axis), inactivity (X-axis), and user count (bubble size). Top-right = highest revenue, highest inactivity — the most financially dangerous quadrant.
- 
-| Segment | Unique Users | Total Revenue | % of Total Revenue | Avg Recency | Avg CLV | Status |
-|---|---|---|---|---|---|---|
-| At Risk | 2,171 | $245,441 | 22.1% | 248 days | $113 | 🔴 Deteriorating |
-| Loyal Customers | 1,248 | $226,086 | 20.4% | 92 days | $181 | ⚠️ At threshold |
-| Potential Loyalist | 2,866 | $204,951 | 18.5% | 36 days | $72 | ✅ Active — activation window open |
-| Champions | 735 | $135,387 | 12.2% | 11 days | $184 | ✅ Healthiest |
-| Cant Lose Them | 496 | $85,653 | 7.7% | 309 days | $173 | 🔴 Deteriorating |
 
 **The insight:**
 
@@ -218,22 +117,7 @@ The bubble map positions each segment across revenue (Y-axis), inactivity (X-axi
 
 ### Finding 4 — The Behavioral Clock: At Risk Customers Have Already Churned
 
-<img width="1020" alt="EDA 5" src="https://github.com/user-attachments/assets/0ba7a4fb-9308-4c82-a501-240a3157d6d0" />
 
-Average days between orders varies dramatically — and functions as a leading indicator of churn, not a lagging one.
- 
-| Segment | Avg Days Between Orders | vs. Champion Benchmark |
-|---|---|---|
-| **Champions** | 91.4 days | — Benchmark |
-| Loyal Customers | 188.0 days | 2.1× |
-| Cant Lose Them | 327.3 days | 3.6× |
-| **At Risk** | 480.0 days | **5.3×** |
-| Need Attention | 546.3 days | 6.0× |
-| Hibernating | 601.8 days | 6.6× |
-| About to Sleep | 659.6 days | 7.2× |
- 
-> **Note on long avg_gap figures:** Potential Loyalist (672 days), New Customers (708 days), and Promising (838 days) show extreme gaps because most users in these segments have only made one purchase. The gap calculation spans their entire account history — not a meaningful repeat cycle. For these cohorts, **recency is the operative signal** (Potential Loyalist: 36 days). The gap figures are measurement artifacts.
- 
 **The insight:** At Risk customers are not "buying less often" — at 480 days vs the 91-day Champions benchmark, they exhibit behavioral patterns consistent with advanced disengagement. They simply haven't been classified as lost yet. The difference between Champions and At Risk suggests a meaningful behavioral shift rather than a simple gradual decline in activity.
  
 **Why it matters:** Interval data determines intervention timing across all phases. Loyal Customers should be contacted at day 150 — before the 188-day threshold, not after.
@@ -242,15 +126,7 @@ Average days between orders varies dramatically — and functions as a leading i
 
 ### Finding 5 — Category Affinity: The Personalization Map Already Exists in the Data
 
-<img width="1020" alt="EDA 6" src="https://github.com/user-attachments/assets/77e4a421-d787-426e-a927-65adbd8a91bf" />
 
-Category affinity analysis reveals consistent purchasing patterns that differ significantly between premium and entry-level segments — and maps directly onto the personalization strategy in Section 8.
- 
-| Profile | Segments | Top Categories | Avg Item Price |
-|---|---|---|---|
-| **Premium** | Champions, Loyal, At Risk, Cant Lose Them | Jeans + Outerwear & Coats + Fashion Hoodies & Sweatshirt | $110–$184 |
-| **Entry-level** | Potential Loyalist, Hibernating, New Customers | Intimates + Tops & Tees | $26–$48 |
- 
 **The insight:** At Risk customers were Jeans and Outerwear buyers before they became inactive. They are disengaged premium fashion buyers — not price-sensitive shoppers. A win-back email referencing their specific category ("Your favorite Jeans collection is waiting") is the right message, not a generic discount.
  
 **Why it matters:** Precise sub-bucket targeting is possible without additional data collection. The personalization input already exists in purchase history — sub-buckets for At Risk: Jeans lovers · Fashion Hoodies lovers · Outerwear lovers.
