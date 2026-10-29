@@ -42,6 +42,14 @@ Derived directly from the background above, the objectives are:
 
 ## 2. Data Understanding
 
+### 2.1 Data Dictionary
+
+This project uses publicly available consumer complaint data from the Consumer Financial Protection Bureau (CFPB) to analyze complaints associated with Bank of America between 2017 and 2023.
+
+The dataset contains information about complaint submission channels, submission dates, consumer locations, financial products, reported issues, company responses, and response timeliness. These attributes provide a foundation for understanding complaint patterns, identifying recurring consumer concerns, and evaluating the company's response characteristics.
+
+The data understanding phase focuses on examining the dataset structure, interpreting the meaning of each field, identifying data quality issues, and determining the variables relevant to the analytical objectives.
+
 **Platform:** Maven Analytics
 
 **Dataset:** `https://mavenanalytics.io/data-playground/financial-consumer-complaints`
@@ -50,7 +58,9 @@ Derived directly from the background above, the objectives are:
 
 **License:** Public Domain
 
-**Data Dictionary**
+
+
+
 
 | **Field** | **Description** |
 |---|---|
@@ -67,287 +77,186 @@ Derived directly from the background above, the objectives are:
 | Company response to consumer | This is how the company responded. For example, "Closed with explanation." |
 | Timely response? | Whether the company gave a timely response (Yes/No) |
 
+### 2.2 Data Quality Assessment
+
+The dataset is inspected in Microsoft Excel to understand its structure and identify potential data quality issues before analysis.
+
+The assessment focuses on:
+
+Duplicate records: Check for duplicate complaint IDs and records.
+
+Date fields: Verify date formats and chronological consistency.
+
+Missing values: Identify blank cells in sub-product, sub-issue, and response-related columns.
+
+Categorical consistency: Review values in State, Product, and Issue.
+
+Company responses: Examine the completeness of public responses and consumer response descriptions.
+
+Timely response: Inspect the available Yes/No values and identify blank records.
+
+The findings from this assessment determine the data cleaning and preparation steps described in the next phase.
 
 ---
 
-## 4. Data Preparation
+## 3. Data Preparation
 
----
+Data preparation is performed in Microsoft Excel to improve data consistency and create additional variables for analysis. The original source columns are retained wherever possible, while new columns are added for analytical purposes.
 
+### 3.1 Data Cleaning and Transformation
 
+| Column | Action | Description |
+|---|---|---|
+| Complaint ID | Check duplicates | Check for duplicate complaint IDs and remove confirmed duplicate records where appropriate. |
+| Date submitted | Sort dates | Sort records from oldest to newest to support chronological inspection. |
+| State | Clean values | Standardize inconsistent formatting and correct identifiable data-entry inconsistencies. |
+| Product | Clean values | Standardize product labels where necessary. |
+| Sub-product | Handle blanks | Replace blank cells with `Not specified`. |
+| Issue | Clean values | Standardize inconsistent formatting and labels where necessary. |
+| Sub-issue | Handle blanks | Replace blank cells with `Not specified`. |
+| Company public response | Handle blanks | Replace blank cells with `No public response provided`. |
+| Company response to consumer | Clean values | Review and standardize response descriptions where necessary. |
+| Timely response? | Handle blanks | Retain `Yes` and `No` values and classify blank values as `Pending` only when justified by the data; otherwise, use `Unknown`. |
 
+### 3.2 Feature Engineering
 
+Additional columns are created in Excel to support temporal analysis, response performance measurement, and categorical comparisons.
 
-## 5. Key Findings
+| New Column | Source Column | Description |
+|---|---|---|
+| Year | Date submitted | Extract the year from the submission date. |
+| Month | Date submitted | Extract the month from the submission date. |
+| Quarter | Date submitted | Identify the calendar quarter (Q1–Q4). |
+| Response Time (Days) | Date submitted and Date received | Calculate the difference between the two dates to measure the time between CFPB receipt and company referral. |
+| Product Category | Product | Group existing product labels into broader categories to simplify product-level analysis. |
+| Issue Category | Issue | Group similar complaint issues into broader categories to simplify issue-level analysis. |
+| Complaint Status | Company response to consumer | Create a derived status using documented Excel classification rules, such as `Closed` and `In Progress`, where the source data supports the classification. |
 
+**Note:** The source dictionary defines `Date submitted` as the date the CFPB received the complaint and `Date received` as the date the CFPB sent it to the company. Therefore, their difference measures the interval between CFPB receipt and company referral, not the company's response time. Actual response time requires a valid company response date.
 
----
+### 3.3 Excel Implementation
 
-### Finding 1 — 
-**The insight:**
+The following Excel formulas can be used to create the additional date columns, assuming the source data has been formatted as an Excel Table named `Complaints`.
 
-**Why it matters:** 
-
----
-
-### Finding 2 — 
-
-**The insight:** 
-**Why it matters:** 
-
----
-
-### Finding 3 — 
-
-**The insight:**
-
----
-
-### Finding 4 — 
-
-
-**The insight:** 
-
-**Why it matters:** 
-
----
-
-### Finding 5 — 
-
-
-**The insight:** 
-
-**Why it matters:** 
-
-
----
-
-## 7. Dashboard
-
----
-
-## 8. Insights & Strategic Recommendations
-> *The recommendations below are based on observed behavioral patterns within the available dataset. Revenue figures represent historical contribution, not guaranteed future loss or recovery projections. Where future outcomes are discussed, they are framed as directional opportunities requiring validation through experimentation.*
-
-### 8.1 Key Findings Summary
-
-**Objective 1 — Acquisition:**
-1. **Structural acquisition barrier:** ~250,000 sessions per cycle (per dataset) are lost between product view and purchase completion. The near-identical funnel pattern across channels strongly suggests a platform-level friction point — likely related to registration or checkout access requirements — rather than channel quality itself.
-2. **Channel-agnostic drop-off:** The ~50% product-to-cart rate and 0% cart-to-purchase rate are identical across all five channels, indicating the issue is likely platform-wide and cannot be solved by reallocating marketing budget.
-
-**Objective 2 — Retention:**
-
-3. **Revenue concentration risk:** The top 4 segments account for 73% of total revenue. At Risk and Cant Lose Them together contribute $331K (29.8%) from segments in active deterioration, while Loyal Customers ($226K) are approaching behavioral thresholds associated with higher inactivity risk.
-4. **Behavioral churn signal:** At Risk customers are purchasing at 5× the interval of Champions (480 vs 91 days) — suggesting that spontaneous re-engagement becomes increasingly unlikely without intervention.
-5. **Untapped activation window:** Potential Loyalist (2,866 users, $205K revenue) are largely one-time buyers with a recency of just 36 days — creating a meaningful opportunity to encourage second-purchase behavior and future customer value growth.
-6. **Category anchor:** Jeans consistently appears as the top revenue-driving category across premium segments (more than 10% revenue constribution per each premium segment) — consistently the #1 revenue driver for Champions, Loyal Customers, At Risk, and Cant Lose Them alike, enabling precise personalization without additional data collection.
-
----
-
-### 8.2 What We Know About Potential Downside
-
-Without intervention, the following revenue is associated with segments already showing deterioration:
-
-| Segment | Revenue (12 mo) | Current Status |
-|---------|-----------------|----------------|
-| At Risk | $245,441 | Already inactive (248 days) |
-| Cant Lose Them | $85,653 | Already inactive (309 days) |
-
-Loyal Customers ($226,086) remain active but show early warning signs (approaching 188-day purchase gap). The proportion that would deteriorate without intervention cannot be accurately predicted from available data.
-
-**What this means:** The $331K from already-deteriorating segments represents revenue that is unlikely to recover passively. For Loyal Customers, the appropriate next step is preventive monitoring — not assuming they will churn.
-
----
-
-### 8.3 Pillar 1 — Acquisition Optimization (Anonymous Users)
- 
-**Problem:** Funnel analysis reveals two separate conversion barriers among Anonymous users:
-
-- Approximately half of sessions never progress from product view to cart, suggesting a persuasion or purchase-intent issue.
-- Sessions that do reach cart cannot complete checkout due to the mandatory registration requirement, resulting in a 0% cart-to-purchase rate.
-
-Together, these drop-offs represent a significant loss of already-acquired traffic.
- 
-**Approach: Zero Additional Marketing Spend** — Improve conversion efficiency from existing traffic before increasing acquisition spend. Experiments are sequenced to isolate the effect of persuasion improvements versus checkout-friction reduction.
- 
-**Phase 1 — Product Page Optimization (Persuasion)**
- 
-| Element | Detail |
+| New Column | Example Formula |
 |---|---|
-| Hypothesis | Adding social proof elements may improve product-to-cart progression |
-| Design | A/B test on product page UI — Group A (standard layout) vs Group B (social proof + ratings visibility) |
-| Randomization unit | session_id |
-| Primary metric | Product-to-cart rate |
-| Guardrail metric | Page load time must not increase materially |
-| Success threshold | Positive statistically significant lift vs control |
-| Potential implication (to be measured) | Higher downstream checkout opportunities if more users progress into cart |
-| Exit criteria | If lift remains negligible after test period, prioritize friction-reduction experiments instead |
- 
-**Phase 2 — Cart Friction Reduction (One-Tap Sign-In)**
- 
-| Element | Detail |
-|---|---|
-| Hypothesis | Reducing registration friction may improve cart-to-registration progression |
-| Design | A/B Test — Group A (standard registration flow) vs Group B (One-Tap Google Sign-In) |
-| Randomization unit | session_id |
-| Primary metric | Cart-to-registered-lead rate |
-| Guardrail metric | Registration page bounce rate must not increase |
-| Benchmark reference | Simplified checkout flows are commonly associated with improved conversion completion in e-commerce UX studies |
-| Success threshold | Measurable lift relative to control group |
-| Exit criteria | If impact remains limited, the barrier may require broader checkout-flow redesign |
- 
----
+| Year | `=YEAR([@[Date submitted]])` |
+| Month | `=TEXT([@[Date submitted]],"mmmm")` |
+| Quarter | `="Q"&ROUNDUP(MONTH([@[Date submitted]])/3,0)` |
+| Date Interval (Days) | `=[@[Date received]]-[@[Date submitted]]` |
 
-### 8.4 Pillar 2 — Retention: Phase 1 (Reactive Win-back)
- 
-**Problem:** $331K in revenue (29.8%) sits within two deteriorating segments that have stopped purchasing but whose category preferences and contact information are known.
- 
-**Why Email?** Email accounts for 44.8% of all registered user sessions (81,421 of 181,741 combined sessions). Near-zero variable cost — leverages an existing database with no incremental acquisition spend.
- 
-**Why sequential, not parallel?** Running At Risk and Cant Lose Them simultaneously would split team focus, complicate measurement, and reduce the learnings transferable from one campaign to the next. At Risk goes first because its revenue pool is nearly 3× larger.
- 
----
+For `Product Category` and `Issue Category`, create a consistent mapping table that assigns each original label to a broader category. ChatGPT can assist in proposing these mappings, which should then be reviewed and applied consistently in Excel.
 
-#### Phase 1A — At Risk Win-back (Weeks 1–3)
- 
-**Rationale for priority:** Largest single revenue-at-risk pool ($245K, 22.1% of total). The segment size is large enough to support an initial controlled experiment and directional measurement.
+For `Complaint Status`, use an Excel formula only after defining classification rules based on the actual response values. A populated response field alone does not confirm that a complaint has been resolved.
 
-| Element | Detail |
-|---|---|
-| Strategy | Stratified A/B Test based on historical category affinity |
-| Sub-buckets | Jeans lovers · Fashion Hoodies lovers · Swim lovers |
-| Randomization | Independent 50/50 split within each subgroup |
-| Group A (Control) | Generic re-engagement email |
-| Group B (Treatment) | Personalized category-based re-engagement email |
-| Conversion window | 30 days |
-| Primary metric | Re-activation rate |
-| Guardrail metric | Unsubscribe rate |
-| Success threshold | Positive lift relative to control group |
-| AOV reference | $105.24 (calculated from segment transaction data) |
-| Revenue implication | Due to the segment's size (2,171 users) and existing purchase history, even modest improvements in re-activation rate may create meaningful incremental revenue without additional acquisition spend. |
-| Exit criteria | If lift remains negligible, alternative channels or incentive structures should be evaluated |
+### 3.4 Data Preparation Outcome
+
+The prepared dataset is intended to support the following analysis:
+
+- Complaint trends by year, month, and quarter.
+- Complaint distribution across product and issue categories.
+- Geographical comparisons by state.
+- Analysis of company response patterns and timely response indicators.
+- Examination of the interval between CFPB receipt and company referral.
+
+The prepared data is then used for exploratory data analysis (EDA) to identify trends, recurring complaint issues, and potential operational gaps in Bank of America's complaint-handling process.
+
 
 ---
 
-#### Phase 1B — Cant Lose Them Win-back (Weeks 3–6, after Phase 1A results are measured)
- 
-**Rationale for sequencing after At Risk:** Although the revenue pool is smaller ($85K, 7.7%), this segment shows one of the platform's highest average transaction values ($152.89) and strong affinity toward premium categories such as Outerwear & Coats and Jeans. Results from Phase 1A serve as a directional learning input before expanding personalization efforts into a smaller but higher-value cohort.
- 
-**Why this segment still warrants intervention despite smaller population size:** The segment combines prolonged inactivity with relatively high AOV and CLV, suggesting that even limited re-activation improvements may produce meaningful business impact on a per-customer basis.
- 
-| Element | Detail |
-|---|---|
-| Strategy | Category-personalized win-back email |
-| Focus categories | Jeans + Outerwear & Coats |
-| Incentive approach | Test different re-engagement approaches (e.g., urgency framing, category personalization, or selective incentives) while monitoring margin impact |
-| Group A (Control) | Generic re-engagement email |
-| Group B (Treatment) | Personalized category-focused re-engagement email |
-| Conversion window | 30 days |
-| Primary metric | Re-activation rate |
-| Guardrail metric | Net margin after discount must remain positive |
-| AOV reference | $152.89 (calculated from segment transaction data) |
-| Strategic implication | Despite smaller population size, the segment's higher AOV increases the value of each successful re-activation |
-| Exit criteria | If net margin after campaign goes negative, reduce incentive or pause campaign |
- 
----
 
-### 8.5 Pillar 3 — Retention: Phase 2 (Preventive & Growth)
 
-> Phase 2 runs in parallel after Phase 1A is launched. These are automated triggers — near-zero ongoing effort after initial setup.
->
-> These interventions prioritize low-cost CRM automation as an initial experimentation layer. Additional channels (e.g., push notifications, onsite personalization, or paid retargeting) may be evaluated after baseline effectiveness is established.
 
----
 
-#### Phase 2A — Loyal Customers: Pre-gap Triggered Email (Month 2, ongoing)
- 
-**Rationale:** This segment remains active (recency 92 days) and contributes $226K (20.4% of total revenue). Their average purchase gap is 188 days, making day 150 a potential intervention point to test whether early re-engagement can influence purchase behavior before the segment's historical average repurchase interval is reached.
- 
-| Element | Detail |
-|---|---|
-| Trigger | Automated email at day 150 post-last-purchase (38 days before the 188-day avg threshold) |
-| Content | New arrivals in Jeans or Outerwear — initial test avoids discounting to evaluate whether reminder-based re-engagement alone influences purchase timing |
-| Design | A/B test: Group A (no trigger) vs Group B (receives day-150 email) |
-| Primary metric | Purchase rate before day 188 |
-| Guardrail metric | Unsubscribe rate |
-| Success threshold | Higher purchase rate in treatment group vs control |
-| AOV reference | $128.88 (calculated from segment transaction data) |
-| Revenue implication | This is a preventive intervention — the goal is to learn whether early re-engagement can influence purchase timing. Any reduction in revenue loss would need to be measured post-experiment. |
-| Ongoing effort | Near-zero after initial automation setup |
- 
-> *Note: "Revenue defended" is not projected here because the natural churn rate for this segment without intervention cannot be determined from available data. The experiment is designed to measure whether the trigger has any detectable effect on purchase timing.*
+# Executive Summary
 
----
- 
-#### Phase 2B — Potential Loyalist: Second Purchase Activation (Month 2–3)
- 
-**Rationale:** The 672-day avg_gap for this segment is a measurement artifact — it reflects the gap calculation across a multi-year dataset for users who have largely made only one purchase. The operative signal is their **recency of 36 days**. The segment size (2,866 users, $205K revenue) makes it a meaningful population for testing second-purchase activation strategies.
- 
-| Element | Detail |
-|---|---|
-| Trigger | Automated email at day 30 post-first-purchase |
-| Content | Second-purchase voucher, personalized to first-purchase category (Intimates / Sleep & Lounge / Tops & Tees) |
-| Design | This experiment primarily evaluates timing effectiveness rather than absolute incremental lift, since both groups receive an intervention. |
-| Primary metric | Second purchase rate within 60 days |
-| Guardrail metric | Voucher redemption rate |
-| Success threshold | Positive lift in second purchase rate vs control (or between timing groups) |
-| AOV reference | $71.39 (calculated from segment transaction data) |
-| Revenue implication | This segment represents one-time buyers with recent activity. Even modest improvements in second purchase conversion could meaningfully affect long-term customer value trajectories. |
-| Ongoing effort | Near-zero after automation setup |
+### Overview of Findings
 
-> *Note on benchmarks: Industry second-purchase rates for one-time buyers vary widely (5-15% depending on category and incentive). Actual lift will be measured from the A/B test.*
+Explain the overarching findings, trends, and themes in 2-3 sentences here. This section should address the question: "If a stakeholder were to take away 3 main insights from your project, what are the most important things they should know?" You can put yourself in the shoes of a specific stakeholder - for example, a marketing manager or finance director - to think creatively about this section.
 
----
- 
-#### Phase 2C — Champions: Value Maximization (Month 2–3, parallel)
- 
-**Rationale:** Champions are the healthiest segment — no rescue required. This intervention is opportunistic: test whether cross-sell recommendations can increase AOV without negatively affecting cart abandonment.
+[Visualization, including a graph of overall trends or snapshot of a dashboard]
 
-| Element | Detail |
-|---|---|
-| Strategy | Automated cross-sell recommendations at checkout |
-| Recommendation logic | Jeans purchasers shown Fashion Hoodies & Sweatshirt / Sweaters (based on observed category affinity in this segment) |
-| Design | A/B test — Group A (standard cart) vs Group B (cart + cross-sell) |
-| Primary metric | Average Order Value (AOV) |
-| Guardrail metric | Cart abandonment rate |
-| Success threshold | Higher AOV in treatment group without material increase in cart abandonment |
-| AOV reference | $121.94 (calculated from segment transaction data) |
-| Revenue implication | If successful, this could increase per-transaction value for the platform's healthiest segment without additional acquisition cost. |
-| Exit criteria | If cart abandonment increases meaningfully in treatment group, reduce recommendation prominence or pause |
 
-> *Note: No AOV lift is projected here because the effect size cannot be known before the experiment. The test is designed to measure whether cross-sell recommendations have a detectable impact on transaction value.*
 
----
- 
-### 8.6 What We Won't Do (and Why)
- 
-**Hibernating & About to Sleep are not active win-back targets.** AOV of $42–$44 and CLV of ~$38, combined with purchase gaps exceeding 600 days, make the ROI case difficult to justify against higher-value opportunities. These segments are placed into an **automated low-touch email sequence every 3 months** — preserving optionality at negligible cost without committing resources better allocated elsewhere.
- 
----
- 
-### 8.7 Exit Criteria
- 
-A recommendation without exit criteria is a commitment without conditions.
- 
-| Phase | Continue if | Adjust if | Stop if |
-|---|---|---|---|
-| At Risk win-back | Meaningful positive lift vs control | Positive but modest lift | No detectable lift after test window |
-| Cant Lose Them | Margin remains positive | Margin compression observed | Margin turns consistently negative |
-| Loyal Customers trigger | Earlier repurchase behavior improves | Engagement low but directional improvement exists | Unsubscribe or disengagement materially increases |
-| Potential Loyalist trigger | Second purchase conversion improves vs baseline | Timing effect unclear | No meaningful behavioral difference observed |
-| Champions cross-sell | AOV improves without material abandonment increase | Slight abandonment increase observed | Abandonment materially worsens |
-| Acquisition Phase 1 | Product-to-cart conversion improves | Positive but inconclusive result | No detectable conversion improvement |
- 
----
- 
-## Limitations & Methodology Notes
- 
-1. **Synthetic dataset:** TheLook is a generated dataset. `cart_to_purchase = 0%` for Anonymous and uniformly low `avg_orders` are by-design artifacts, not real business signals. Findings are directionally valid — not operationally prescriptive without real-data calibration.
-2. **RFM trailing window vs. full history:** RFM scoring uses a 1-year trailing window. Large avg_gap values in At Risk (480 days) draw on multi-year purchase history beyond this window — inactivity severity should be validated against real business baselines before operational use.
-3. **Potential Loyalist avg_gap:** The 672-day figure is a measurement artifact for largely single-purchase users. Recency (36 days) is the operative signal for this segment.
-4. **AOV over CLV:** All financial projections use AOV as the multiplier — a deliberate choice to avoid amplifying the low-frequency artifact in this dataset. Champions average only 1.5 orders; real-world Champions would show 4–8+. CLV projections would silently overstate returns.
-5. **A/B tests are forward-looking:** Historical data cannot be retroactively randomized. All experiment designs are recommendations to execute going forward.
-6. **RFM as a relative ranking tool:** Segmentation remains valid for comparing value between segments within this dataset. Absolute frequency thresholds require recalibration against real business data before deployment.
+# Insights Deep Dive
+### Category 1:
 
----
+* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+
+[Visualization specific to category 1]
+
+
+### Category 2:
+
+* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+
+[Visualization specific to category 2]
+
+
+### Category 3:
+
+* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+
+[Visualization specific to category 3]
+
+
+### Category 4:
+
+* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+  
+* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+
+[Visualization specific to category 4]
+
+
+
+# Recommendations:
+
+Based on the insights and findings above, we would recommend the [stakeholder team] to consider the following: 
+
+* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+  
+* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+  
+* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+  
+* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+  
+* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+  
+
+
+# Assumptions and Caveats:
+
+Throughout the analysis, multiple assumptions were made to manage challenges with the data. These assumptions and caveats are noted below:
+
+* Assumption 1 (ex: missing country records were for customers based in the US, and were re-coded to be US citizens)
+  
+* Assumption 1 (ex: data for December 2021 was missing - this was imputed using a combination of historical trends and December 2020 data)
+  
+* Assumption 1 (ex: because 3% of the refund date column contained non-sensical dates, these were excluded from the analysis)
+
+
 
