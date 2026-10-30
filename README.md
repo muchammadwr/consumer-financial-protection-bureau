@@ -9,7 +9,6 @@
 1. [Business Understanding](#1-business-understanding)
 2. [Data Understanding](#2-data-understanding)
 4. [Data Preparation](#4-data-preparation)
-5. [Key Findings](#6-key-findings)
 6. [Dashboard](#7-dashboard)
 7. [Insights & Recommendations](#8-insights--strategic-recommendations)
 
@@ -163,8 +162,6 @@ The prepared data is then used for exploratory data analysis (EDA) to identify t
 
 
 ---
-
-
 
 
 
