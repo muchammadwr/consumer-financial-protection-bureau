@@ -8,34 +8,39 @@
 
 1. [Business Understanding](#1-business-understanding)
 2. [Data Understanding](#2-data-understanding)
-4. [Data Preparation](#4-data-preparation)
-6. [Dashboard](#7-dashboard)
-7. [Insights & Recommendations](#8-insights--strategic-recommendations)
+3. [Data Preparation](#3-data-preparation)
+4. [Executive Summary](#4-executive-summary)
+5. [Insights Deep Dive](#5-insights-deep-dive)
+6. [Recommendations](#6-recommendations)
+7. [Assumptions and Caveats](#7-assumptions-and-caveats)
 
 ---
 
 ## 1. Business Understanding
 
 ### 1.1 Background
+
 Bank of America, like all financial institutions, is required to handle consumer complaints submitted through the Consumer Financial Protection Bureau (CFPB). Between 2017 and 2023, a large volume of complaints was logged covering a wide range of products credit cards, mortgages, bank accounts, debt collection, and more along with the specific issues raised, how each complaint was submitted, and how the company responded. This data is publicly available but exists largely as raw, unstructured records: thousands of rows of dates, categories, and response types that are not yet organized into any decision-ready form.
 
 Without analysis, this data offers little practical value. It’s unclear whether complaint volume follows any predictable pattern over time, which products or issues are driving the bulk of customer dissatisfaction, how the company typically resolves disputes, and whether there are gaps in responsiveness that could point to operational weaknesses. These are not rhetorical questions they have real implications for customer experience, regulatory risk, and resource allocation, but they remain unanswered as long as the data sits unexamined.
 
 By systematically analyzing this complaint data, the project aims to surface clear, evidence-based insights: whether complaints spike during certain periods, which products and issues deserve the most attention, how consistent the company’s resolution practices are, and what patterns (if any) distinguish complaints that receive untimely responses. These insights would allow a bank’s customer experience, compliance, or operations teams to prioritize improvements where they matter most, rather than relying on assumptions. For a portfolio project, this also demonstrates the ability to move from a messy real-world dataset to structured, actionable findings a core data analyst skill
 
-
 ### 1.2 Objectives
+
 Derived directly from the background above, the objectives are:
-1.	Identify temporal patterns in complaint volume determine whether complaints rise or fall seasonally, monthly, or around specific events, to understand if complaint intake is predictable.
-2.	Determine which products and issues drive the most complaints rank products by complaint volume and break down the most frequent issues within each, to pinpoint where customer pain is concentrated.
-3.	Evaluate how complaints are resolved analyze the distribution of company response types (e.g., closed with explanation, closed with monetary relief) to understand the bank’s typical resolution behavior.
-4.	Investigate the drivers of untimely responses examine whether certain products, issues, states, or submission channels correlate with late responses, to identify potential operational bottlenecks or risk areas.
+
+1. Identify temporal patterns in complaint volume determine whether complaints rise or fall seasonally, monthly, or around specific events, to understand if complaint intake is predictable.
+2. Determine which products and issues drive the most complaints rank products by complaint volume and break down the most frequent issues within each, to pinpoint where customer pain is concentrated.
+3. Evaluate how complaints are resolved analyze the distribution of company response types (e.g., closed with explanation, closed with monetary relief) to understand the bank’s typical resolution behavior.
+4. Investigate the drivers of untimely responses examine whether certain products, issues, states, or submission channels correlate with late responses, to identify potential operational bottlenecks or risk areas.
 
 ### 1.3 Analytical Questions
-1.	Do consumer complaints show any seasonal patterns?
-2.	Which products present the most complaints? What are its most common issues?
-3.	How are complaints typically resolved?
-4.	Can you learn anything from the complaints with untimely responses?
+
+1. Do consumer complaints show any seasonal patterns?
+2. Which products present the most complaints? What are its most common issues?
+3. How are complaints typically resolved?
+4. Can you learn anything from the complaints with untimely responses?
 
 ---
 
@@ -57,24 +62,20 @@ The data understanding phase focuses on examining the dataset structure, interpr
 
 **License:** Public Domain
 
-
-
-
-
-| **Field** | **Description** |
-|---|---|
-| Complaint ID | The unique identification number for a complaint |
-| Submitted via | How the complaint was submitted to the CFPB |
-| Date submitted | The date the CFPB received the complaint |
-| Date received | The date the CFPB sent the complaint to the company |
-| State | The state of the mailing address provided by the consumer |
-| Product | The type of product the consumer identified in the complaint |
-| Sub-product | The type of sub-product the consumer identified in the complaint (not all Products have Sub-products) |
-| Issue | The issue the consumer identified in the complaint (possible values are dependent on Product) |
-| Sub-issue | The sub-issue the consumer identified in the complaint (possible values are dependent on Product and Issue, and not all Issues have corresponding Sub-issues) |
-| Company public response | The company's optional public-facing response to a consumer's complaint. Companies can choose a response from a pre-set list of options that will be posted on the public database. For example, "Company believes complaint is the result of an isolated error." |
-| Company response to consumer | This is how the company responded. For example, "Closed with explanation." |
-| Timely response? | Whether the company gave a timely response (Yes/No) |
+| **Field**                    | **Description**                                                                                                                                                                                                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Complaint ID                 | The unique identification number for a complaint                                                                                                                                                                                                                  |
+| Submitted via                | How the complaint was submitted to the CFPB                                                                                                                                                                                                                       |
+| Date submitted               | The date the CFPB received the complaint                                                                                                                                                                                                                          |
+| Date received                | The date the CFPB sent the complaint to the company                                                                                                                                                                                                               |
+| State                        | The state of the mailing address provided by the consumer                                                                                                                                                                                                         |
+| Product                      | The type of product the consumer identified in the complaint                                                                                                                                                                                                      |
+| Sub-product                  | The type of sub-product the consumer identified in the complaint (not all Products have Sub-products)                                                                                                                                                             |
+| Issue                        | The issue the consumer identified in the complaint (possible values are dependent on Product)                                                                                                                                                                     |
+| Sub-issue                    | The sub-issue the consumer identified in the complaint (possible values are dependent on Product and Issue, and not all Issues have corresponding Sub-issues)                                                                                                     |
+| Company public response      | The company's optional public-facing response to a consumer's complaint. Companies can choose a response from a pre-set list of options that will be posted on the public database. For example, "Company believes complaint is the result of an isolated error." |
+| Company response to consumer | This is how the company responded. For example, "Closed with explanation."                                                                                                                                                                                        |
+| Timely response?             | Whether the company gave a timely response (Yes/No)                                                                                                                                                                                                               |
 
 ### 2.2 Data Quality Assessment
 
@@ -104,32 +105,32 @@ Data preparation is performed in Microsoft Excel to improve data consistency and
 
 ### 3.1 Data Cleaning and Transformation
 
-| Column | Action | Description |
-|---|---|---|
-| Complaint ID | Check duplicates | Check for duplicate complaint IDs and remove confirmed duplicate records where appropriate. |
-| Date submitted | Sort dates | Sort records from oldest to newest to support chronological inspection. |
-| State | Clean values | Standardize inconsistent formatting and correct identifiable data-entry inconsistencies. |
-| Product | Clean values | Standardize product labels where necessary. |
-| Sub-product | Handle blanks | Replace blank cells with `Not specified`. |
-| Issue | Clean values | Standardize inconsistent formatting and labels where necessary. |
-| Sub-issue | Handle blanks | Replace blank cells with `Not specified`. |
-| Company public response | Handle blanks | Replace blank cells with `No public response provided`. |
-| Company response to consumer | Clean values | Review and standardize response descriptions where necessary. |
-| Timely response? | Handle blanks | Retain `Yes` and `No` values and classify blank values as `Pending` only when justified by the data; otherwise, use `Unknown`. |
+| Column                       | Action           | Description                                                                                                                    |
+| ---------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Complaint ID                 | Check duplicates | Check for duplicate complaint IDs and remove confirmed duplicate records where appropriate.                                    |
+| Date submitted               | Sort dates       | Sort records from oldest to newest to support chronological inspection.                                                        |
+| State                        | Clean values     | Standardize inconsistent formatting and correct identifiable data-entry inconsistencies.                                       |
+| Product                      | Clean values     | Standardize product labels where necessary.                                                                                    |
+| Sub-product                  | Handle blanks    | Replace blank cells with `Not specified`.                                                                                      |
+| Issue                        | Clean values     | Standardize inconsistent formatting and labels where necessary.                                                                |
+| Sub-issue                    | Handle blanks    | Replace blank cells with `Not specified`.                                                                                      |
+| Company public response      | Handle blanks    | Replace blank cells with `No public response provided`.                                                                        |
+| Company response to consumer | Clean values     | Review and standardize response descriptions where necessary.                                                                  |
+| Timely response?             | Handle blanks    | Retain `Yes` and `No` values and classify blank values as `Pending` only when justified by the data; otherwise, use `Unknown`. |
 
 ### 3.2 Feature Engineering
 
 Additional columns are created in Excel to support temporal analysis, response performance measurement, and categorical comparisons.
 
-| New Column | Source Column | Description |
-|---|---|---|
-| Year | Date submitted | Extract the year from the submission date. |
-| Month | Date submitted | Extract the month from the submission date. |
-| Quarter | Date submitted | Identify the calendar quarter (Q1–Q4). |
-| Response Time (Days) | Date submitted and Date received | Calculate the difference between the two dates to measure the time between CFPB receipt and company referral. |
-| Product Category | Product | Group existing product labels into broader categories to simplify product-level analysis. |
-| Issue Category | Issue | Group similar complaint issues into broader categories to simplify issue-level analysis. |
-| Complaint Status | Company response to consumer | Create a derived status using documented Excel classification rules, such as `Closed` and `In Progress`, where the source data supports the classification. |
+| New Column           | Source Column                    | Description                                                                                                                                                 |
+| -------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Year                 | Date submitted                   | Extract the year from the submission date.                                                                                                                  |
+| Month                | Date submitted                   | Extract the month from the submission date.                                                                                                                 |
+| Quarter              | Date submitted                   | Identify the calendar quarter (Q1–Q4).                                                                                                                      |
+| Response Time (Days) | Date submitted and Date received | Calculate the difference between the two dates to measure the time between CFPB receipt and company referral.                                               |
+| Product Category     | Product                          | Group existing product labels into broader categories to simplify product-level analysis.                                                                   |
+| Issue Category       | Issue                            | Group similar complaint issues into broader categories to simplify issue-level analysis.                                                                    |
+| Complaint Status     | Company response to consumer     | Create a derived status using documented Excel classification rules, such as `Closed` and `In Progress`, where the source data supports the classification. |
 
 **Note:** The source dictionary defines `Date submitted` as the date the CFPB received the complaint and `Date received` as the date the CFPB sent it to the company. Therefore, their difference measures the interval between CFPB receipt and company referral, not the company's response time. Actual response time requires a valid company response date.
 
@@ -137,12 +138,12 @@ Additional columns are created in Excel to support temporal analysis, response p
 
 The following Excel formulas can be used to create the additional date columns, assuming the source data has been formatted as an Excel Table named `Complaints`.
 
-| New Column | Example Formula |
-|---|---|
-| Year | `=YEAR([@[Date submitted]])` |
-| Month | `=TEXT([@[Date submitted]],"mmmm")` |
-| Quarter | `="Q"&ROUNDUP(MONTH([@[Date submitted]])/3,0)` |
-| Date Interval (Days) | `=[@[Date received]]-[@[Date submitted]]` |
+| New Column           | Example Formula                                |
+| -------------------- | ---------------------------------------------- |
+| Year                 | `=YEAR([@[Date submitted]])`                   |
+| Month                | `=TEXT([@[Date submitted]],"mmmm")`            |
+| Quarter              | `="Q"&ROUNDUP(MONTH([@[Date submitted]])/3,0)` |
+| Date Interval (Days) | `=[@[Date received]]-[@[Date submitted]]`      |
 
 For `Product Category` and `Issue Category`, create a consistent mapping table that assigns each original label to a broader category. ChatGPT can assist in proposing these mappings, which should then be reviewed and applied consistently in Excel.
 
@@ -160,12 +161,9 @@ The prepared dataset is intended to support the following analysis:
 
 The prepared data is then used for exploratory data analysis (EDA) to identify trends, recurring complaint issues, and potential operational gaps in Bank of America's complaint-handling process.
 
-
 ---
 
-
-
-# Executive Summary
+## 4. Executive Summary
 
 ### Overview of Findings
 
@@ -173,87 +171,58 @@ Explain the overarching findings, trends, and themes in 2-3 sentences here. This
 
 [Visualization, including a graph of overall trends or snapshot of a dashboard]
 
+## 5. Insights Deep Dive
 
-
-# Insights Deep Dive
 ### Category 1:
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 
 [Visualization specific to category 1]
 
-
 ### Category 2:
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 
 [Visualization specific to category 2]
 
-
 ### Category 3:
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 
 [Visualization specific to category 3]
 
-
 ### Category 4:
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 
 [Visualization specific to category 4]
 
+## 6. Recommendations
 
+Based on the insights and findings above, we would recommend the [stakeholder team] to consider the following:
 
-# Recommendations:
+- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
 
-Based on the insights and findings above, we would recommend the [stakeholder team] to consider the following: 
-
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-
-
-# Assumptions and Caveats:
+## 7. Assumptions and Caveats
 
 Throughout the analysis, multiple assumptions were made to manage challenges with the data. These assumptions and caveats are noted below:
 
-* Assumption 1 (ex: missing country records were for customers based in the US, and were re-coded to be US citizens)
-  
-* Assumption 1 (ex: data for December 2021 was missing - this was imputed using a combination of historical trends and December 2020 data)
-  
-* Assumption 1 (ex: because 3% of the refund date column contained non-sensical dates, these were excluded from the analysis)
-
-
-
+- Assumption 1 (ex: missing country records were for customers based in the US, and were re-coded to be US citizens)
+- Assumption 1 (ex: data for December 2021 was missing - this was imputed using a combination of historical trends and December 2020 data)
+- Assumption 1 (ex: because 3% of the refund date column contained non-sensical dates, these were excluded from the analysis)
