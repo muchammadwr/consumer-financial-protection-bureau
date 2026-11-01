@@ -170,10 +170,11 @@ The prepared data is then used for exploratory data analysis (EDA) to identify t
 Explain the overarching findings, trends, and themes in 2-3 sentences here. This section should address the question: "If a stakeholder were to take away 3 main insights from your project, what are the most important things they should know?" You can put yourself in the shoes of a specific stakeholder - for example, a marketing manager or finance director - to think creatively about this section.
 
 [Visualization, including a graph of overall trends or snapshot of a dashboard]
+![Dashboard](images/Dashboard.png)
 
 ## 5. Insights Deep Dive
 
-### Category 1:
+### Category Complaints Trend:
 
 - **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 - **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
@@ -181,6 +182,8 @@ Explain the overarching findings, trends, and themes in 2-3 sentences here. This
 - **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
 
 [Visualization specific to category 1]
+![Complaint Trend](images/ComplaintsTrend.png)
+![Complaint Trend](images/MonthlyComplaint.png)
 
 ### Category 2:
 
