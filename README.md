@@ -170,6 +170,7 @@ The prepared data is then used for exploratory data analysis (EDA) to identify t
 Explain the overarching findings, trends, and themes in 2-3 sentences here. This section should address the question: "If a stakeholder were to take away 3 main insights from your project, what are the most important things they should know?" You can put yourself in the shoes of a specific stakeholder - for example, a marketing manager or finance director - to think creatively about this section.
 
 [Visualization, including a graph of overall trends or snapshot of a dashboard]
+
 ![Dashboard](images/Dashboard.png)
 
 ## 5. Insights Deep Dive
