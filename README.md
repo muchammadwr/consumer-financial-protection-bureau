@@ -83,17 +83,14 @@ The dataset is inspected in Microsoft Excel to understand its structure and iden
 
 The assessment focuses on:
 
-Duplicate records: Check for duplicate complaint IDs and records.
-
-Date fields: Verify date formats and chronological consistency.
-
-Missing values: Identify blank cells in sub-product, sub-issue, and response-related columns.
-
-Categorical consistency: Review values in State, Product, and Issue.
-
-Company responses: Examine the completeness of public responses and consumer response descriptions.
-
-Timely response: Inspect the available Yes/No values and identify blank records.
+| Data Quality Check | Description |
+|---|---|
+| Duplicate Records | Check for duplicate complaint IDs and records. |
+| Date Fields | Verify date formats and chronological consistency. |
+| Missing Values | Identify blank cells in sub-product, sub-issue, and response-related columns. |
+| Categorical Consistency | Review values in State, Product, and Issue. |
+| Company Responses | Examine the completeness of public responses and consumer response descriptions. |
+| Timely Response | Inspect the available Yes/No values and identify blank records. |
 
 The findings from this assessment determine the data cleaning and preparation steps described in the next phase.
 
