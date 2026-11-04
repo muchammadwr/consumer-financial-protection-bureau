@@ -1,229 +1,141 @@
-# Consumer Financial Protection Bureau: Financial Consumer Complaints Analytics
+# Consumer Financial Protection Bureau (CFPB): Financial Consumer Complaints Analytics
 
-> **End-to-end analytics project** using Excel Spreadsheets to identify patterns, products, and issues complaint from customers
+An end-to-end data analytics project using Microsoft Excel to analyze Bank of America's consumer complaints from 2017 to 2023. The project aims to identify complaint trends, understand recurring financial product issues, evaluate company response patterns, and provide actionable recommendations to improve customer experience and operational performance.
 
----
+# Project Background
 
-## Table of Contents
+Bank of America operates in the financial services industry, serving consumers through various financial products, including checking and savings accounts, credit cards, mortgages, and loans.
 
-1. [Business Understanding](#1-business-understanding)
-2. [Data Understanding](#2-data-understanding)
-3. [Data Preparation](#3-data-preparation)
-4. [Executive Summary](#4-executive-summary)
-5. [Insights Deep Dive](#5-insights-deep-dive)
-6. [Recommendations](#6-recommendations)
-7. [Assumptions and Caveats](#7-assumptions-and-caveats)
+As a financial institution, the company must manage consumer complaints submitted through the Consumer Financial Protection Bureau (CFPB). Analyzing these complaints provides an opportunity to understand customer dissatisfaction, identify recurring issues, and evaluate the company's complaint-handling performance.
 
----
+This project analyzes consumer complaints submitted between 2017 and 2023 to identify patterns and potential operational gaps.
 
-## 1. Business Understanding
+**The analysis focuses on four key areas:**
 
-### 1.1 Background
+- **Complaint Trends:** Identify annual, quarterly, and monthly complaint patterns.
+- **Product and Issue Analysis:** Determine which financial products and issues generate the highest complaint volumes.
+- **Company Response Analysis:** Evaluate how the company responds to and resolves consumer complaints.
+- **Response Timeliness:** Investigate patterns associated with untimely company responses.
 
-Bank of America, like all financial institutions, is required to handle consumer complaints submitted through the Consumer Financial Protection Bureau (CFPB). Between 2017 and 2023, a large volume of complaints was logged covering a wide range of products credit cards, mortgages, bank accounts, debt collection, and more along with the specific issues raised, how each complaint was submitted, and how the company responded. This data is publicly available but exists largely as raw, unstructured records: thousands of rows of dates, categories, and response types that are not yet organized into any decision-ready form.
+**Analytical Questions:**
 
-Without analysis, this data offers little practical value. It’s unclear whether complaint volume follows any predictable pattern over time, which products or issues are driving the bulk of customer dissatisfaction, how the company typically resolves disputes, and whether there are gaps in responsiveness that could point to operational weaknesses. These are not rhetorical questions they have real implications for customer experience, regulatory risk, and resource allocation, but they remain unanswered as long as the data sits unexamined.
+1. Do consumer complaints show seasonal or temporal patterns?
+2. Which financial products generate the most complaints, and what are their most common issues?
+3. How are consumer complaints typically handled and resolved?
+4. What insights can be identified from complaints with untimely responses?
 
-By systematically analyzing this complaint data, the project aims to surface clear, evidence-based insights: whether complaints spike during certain periods, which products and issues deserve the most attention, how consistent the company’s resolution practices are, and what patterns (if any) distinguish complaints that receive untimely responses. These insights would allow a bank’s customer experience, compliance, or operations teams to prioritize improvements where they matter most, rather than relying on assumptions. For a portfolio project, this also demonstrates the ability to move from a messy real-world dataset to structured, actionable findings a core data analyst skill
+**Tools:** Microsoft Excel
 
-### 1.2 Objectives
+**Dataset:** [Financial Consumer Complaints – Maven Analytics](https://mavenanalytics.io/data-playground/financial-consumer-complaints)
 
-Derived directly from the background above, the objectives are:
+**Data Source:** Consumer Financial Protection Bureau (CFPB)
 
-1. Identify temporal patterns in complaint volume determine whether complaints rise or fall seasonally, monthly, or around specific events, to understand if complaint intake is predictable.
-2. Determine which products and issues drive the most complaints rank products by complaint volume and break down the most frequent issues within each, to pinpoint where customer pain is concentrated.
-3. Evaluate how complaints are resolved analyze the distribution of company response types (e.g., closed with explanation, closed with monetary relief) to understand the bank’s typical resolution behavior.
-4. Investigate the drivers of untimely responses examine whether certain products, issues, states, or submission channels correlate with late responses, to identify potential operational bottlenecks or risk areas.
+**Analysis Period:** 2017–2023
 
-### 1.3 Analytical Questions
+# Data Structure & Initial Checks
 
-1. Do consumer complaints show any seasonal patterns?
-2. Which products present the most complaints? What are its most common issues?
-3. How are complaints typically resolved?
-4. Can you learn anything from the complaints with untimely responses?
+The dataset contains consumer complaint records associated with Bank of America, including submission information, consumer locations, financial products, reported issues, and company responses.
 
----
+The dataset includes the following key attributes:
 
-## 2. Data Understanding
+- **Complaint ID:** Unique identification number for each complaint.
+- **Submitted via:** Channel used to submit the complaint.
+- **Date submitted:** Date the CFPB received the complaint.
+- **Date received:** Date the CFPB sent the complaint to the company.
+- **State:** Consumer's reported state.
+- **Product and Sub-product:** Financial product associated with the complaint.
+- **Issue and Sub-issue:** Specific problems reported by consumers.
+- **Company public response:** Company's optional public-facing response.
+- **Company response to consumer:** Company's response or resolution description.
+- **Timely response?:** Indicates whether the company provided a timely response (Yes/No).
 
-### 2.1 Data Dictionary
+**Initial Data Quality Checks:**
 
-This project uses publicly available consumer complaint data from the Consumer Financial Protection Bureau (CFPB) to analyze complaints associated with Bank of America between 2017 and 2023.
+- Duplicate complaint IDs and records.
+- Date format and chronological consistency.
+- Missing values in sub-product, sub-issue, and response-related columns.
+- Consistency of categorical values.
+- Completeness of company response descriptions.
+- Missing and inconsistent timely response indicators.
 
-The dataset contains information about complaint submission channels, submission dates, consumer locations, financial products, reported issues, company responses, and response timeliness. These attributes provide a foundation for understanding complaint patterns, identifying recurring consumer concerns, and evaluating the company's response characteristics.
+**Data Preparation:**
 
-The data understanding phase focuses on examining the dataset structure, interpreting the meaning of each field, identifying data quality issues, and determining the variables relevant to the analytical objectives.
+Data cleaning and transformation were performed using Microsoft Excel. The preparation process included:
 
-**Platform:** Maven Analytics
+- Checking and removing confirmed duplicate records.
+- Standardizing categorical values.
+- Handling missing values in relevant columns.
+- Extracting Year, Month, and Quarter from submission dates.
+- Creating Product Category and Issue Category.
+- Calculating the interval between CFPB complaint receipt and company referral.
+- Creating derived complaint status classifications based on documented response rules.
 
-**Dataset:** `https://mavenanalytics.io/data-playground/financial-consumer-complaints`
+The prepared dataset supports temporal analysis, product comparisons, issue classification, geographical analysis, and company response evaluation.
 
-**Source:** Consumer Financial Protection Bureau
-
-**License:** Public Domain
-
-| **Field**                    | **Description**                                                                                                                                                                                                                                                   |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Complaint ID                 | The unique identification number for a complaint                                                                                                                                                                                                                  |
-| Submitted via                | How the complaint was submitted to the CFPB                                                                                                                                                                                                                       |
-| Date submitted               | The date the CFPB received the complaint                                                                                                                                                                                                                          |
-| Date received                | The date the CFPB sent the complaint to the company                                                                                                                                                                                                               |
-| State                        | The state of the mailing address provided by the consumer                                                                                                                                                                                                         |
-| Product                      | The type of product the consumer identified in the complaint                                                                                                                                                                                                      |
-| Sub-product                  | The type of sub-product the consumer identified in the complaint (not all Products have Sub-products)                                                                                                                                                             |
-| Issue                        | The issue the consumer identified in the complaint (possible values are dependent on Product)                                                                                                                                                                     |
-| Sub-issue                    | The sub-issue the consumer identified in the complaint (possible values are dependent on Product and Issue, and not all Issues have corresponding Sub-issues)                                                                                                     |
-| Company public response      | The company's optional public-facing response to a consumer's complaint. Companies can choose a response from a pre-set list of options that will be posted on the public database. For example, "Company believes complaint is the result of an isolated error." |
-| Company response to consumer | This is how the company responded. For example, "Closed with explanation."                                                                                                                                                                                        |
-| Timely response?             | Whether the company gave a timely response (Yes/No)                                                                                                                                                                                                               |
-
-### 2.2 Data Quality Assessment
-
-The dataset is inspected in Microsoft Excel to understand its structure and identify potential data quality issues before analysis.
-
-The assessment focuses on:
-
-| Data Quality Check | Description |
-|---|---|
-| Duplicate Records | Check for duplicate complaint IDs and records. |
-| Date Fields | Verify date formats and chronological consistency. |
-| Missing Values | Identify blank cells in sub-product, sub-issue, and response-related columns. |
-| Categorical Consistency | Review values in State, Product, and Issue. |
-| Company Responses | Examine the completeness of public responses and consumer response descriptions. |
-| Timely Response | Inspect the available Yes/No values and identify blank records. |
-
-The findings from this assessment determine the data cleaning and preparation steps described in the next phase.
-
----
-
-## 3. Data Preparation
-
-Data preparation is performed in Microsoft Excel to improve data consistency and create additional variables for analysis. The original source columns are retained wherever possible, while new columns are added for analytical purposes.
-
-### 3.1 Data Cleaning and Transformation
-
-| Column                       | Action           | Description                                                                                                                    |
-| ---------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Complaint ID                 | Check duplicates | Check for duplicate complaint IDs and remove confirmed duplicate records where appropriate.                                    |
-| Date submitted               | Sort dates       | Sort records from oldest to newest to support chronological inspection.                                                        |
-| State                        | Clean values     | Standardize inconsistent formatting and correct identifiable data-entry inconsistencies.                                       |
-| Product                      | Clean values     | Standardize product labels where necessary.                                                                                    |
-| Sub-product                  | Handle blanks    | Replace blank cells with `Not specified`.                                                                                      |
-| Issue                        | Clean values     | Standardize inconsistent formatting and labels where necessary.                                                                |
-| Sub-issue                    | Handle blanks    | Replace blank cells with `Not specified`.                                                                                      |
-| Company public response      | Handle blanks    | Replace blank cells with `No public response provided`.                                                                        |
-| Company response to consumer | Clean values     | Review and standardize response descriptions where necessary.                                                                  |
-| Timely response?             | Handle blanks    | Retain `Yes` and `No` values and classify blank values as `Pending` only when justified by the data; otherwise, use `Unknown`. |
-
-### 3.2 Feature Engineering
-
-Additional columns are created in Excel to support temporal analysis, response performance measurement, and categorical comparisons.
-
-| New Column           | Source Column                    | Description                                                                                                                                                 |
-| -------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Year                 | Date submitted                   | Extract the year from the submission date.                                                                                                                  |
-| Month                | Date submitted                   | Extract the month from the submission date.                                                                                                                 |
-| Quarter              | Date submitted                   | Identify the calendar quarter (Q1–Q4).                                                                                                                      |
-| Response Time (Days) | Date submitted and Date received | Calculate the difference between the two dates to measure the time between CFPB receipt and company referral.                                               |
-| Product Category     | Product                          | Group existing product labels into broader categories to simplify product-level analysis.                                                                   |
-| Issue Category       | Issue                            | Group similar complaint issues into broader categories to simplify issue-level analysis.                                                                    |
-| Complaint Status     | Company response to consumer     | Create a derived status using documented Excel classification rules, such as `Closed` and `In Progress`, where the source data supports the classification. |
-
-**Note:** The source dictionary defines `Date submitted` as the date the CFPB received the complaint and `Date received` as the date the CFPB sent it to the company. Therefore, their difference measures the interval between CFPB receipt and company referral, not the company's response time. Actual response time requires a valid company response date.
-
-### 3.3 Excel Implementation
-
-The following Excel formulas can be used to create the additional date columns, assuming the source data has been formatted as an Excel Table named `Complaints`.
-
-| New Column           | Example Formula                                |
-| -------------------- | ---------------------------------------------- |
-| Year                 | `=YEAR([@[Date submitted]])`                   |
-| Month                | `=TEXT([@[Date submitted]],"mmmm")`            |
-| Quarter              | `="Q"&ROUNDUP(MONTH([@[Date submitted]])/3,0)` |
-| Date Interval (Days) | `=[@[Date received]]-[@[Date submitted]]`      |
-
-For `Product Category` and `Issue Category`, create a consistent mapping table that assigns each original label to a broader category. ChatGPT can assist in proposing these mappings, which should then be reviewed and applied consistently in Excel.
-
-For `Complaint Status`, use an Excel formula only after defining classification rules based on the actual response values. A populated response field alone does not confirm that a complaint has been resolved.
-
-### 3.4 Data Preparation Outcome
-
-The prepared dataset is intended to support the following analysis:
-
-- Complaint trends by year, month, and quarter.
-- Complaint distribution across product and issue categories.
-- Geographical comparisons by state.
-- Analysis of company response patterns and timely response indicators.
-- Examination of the interval between CFPB receipt and company referral.
-
-The prepared data is then used for exploratory data analysis (EDA) to identify trends, recurring complaint issues, and potential operational gaps in Bank of America's complaint-handling process.
-
----
-
-## 4. Executive Summary
+# Executive Summary
 
 ### Overview of Findings
 
-Explain the overarching findings, trends, and themes in 2-3 sentences here. This section should address the question: "If a stakeholder were to take away 3 main insights from your project, what are the most important things they should know?" You can put yourself in the shoes of a specific stakeholder - for example, a marketing manager or finance director - to think creatively about this section.
-
-[Visualization, including a graph of overall trends or snapshot of a dashboard]
+[Summarize the three most important findings from the analysis in 2–3 sentences. Highlight the most significant complaint trends, dominant financial products or issues, and company response performance.]
 
 ![Dashboard](images/Dashboard.png)
 
-## 5. Insights Deep Dive
+# Insights Deep Dive
 
-### Category Complaints Trend:
+### 1. Complaint Trends
 
-- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+- **Main Insight 1:** Describe the annual complaint distribution and identify significant increases or decreases.
+- **Main Insight 2:** Identify monthly or quarterly complaint patterns.
+- **Main Insight 3:** Highlight periods with unusually high complaint volumes.
+- **Main Insight 4:** Explain potential business implications of the observed trends.
 
-[Visualization specific to category 1]
-![Complaint Trend](images/ComplaintsTrend.png)
-![Complaint Trend](images/MonthlyComplaint.png)
+![Annual Complaint Trends](images/ComplaintsTrend.png)
 
-### Category 2:
+![Monthly Complaint Trends](images/MonthlyComplaint.png)
 
-- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+### 2. Product and Issue Analysis
 
-[Visualization specific to category 2]
+- **Main Insight 1:** Identify the financial products with the highest complaint volumes.
+- **Main Insight 2:** Examine the most frequently reported issues within each major product.
+- **Main Insight 3:** Identify recurring customer dissatisfaction patterns.
+- **Main Insight 4:** Explain which products and issues require greater attention.
 
-### Category 3:
+[Product and Issue Visualizations]
 
-- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+### 3. Company Response Analysis
 
-[Visualization specific to category 3]
+- **Main Insight 1:** Analyze the distribution of company response types.
+- **Main Insight 2:** Identify the most common complaint resolution outcomes.
+- **Main Insight 3:** Compare response patterns across financial products.
+- **Main Insight 4:** Highlight potential gaps in complaint-handling practices.
 
-### Category 4:
+[Company Response Visualizations]
 
-- **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-- **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+### 4. Timely Response Analysis
 
-[Visualization specific to category 4]
+- **Main Insight 1:** Evaluate the proportion of timely and untimely responses.
+- **Main Insight 2:** Identify products associated with higher untimely response counts.
+- **Main Insight 3:** Compare untimely responses across reported issues and states.
+- **Main Insight 4:** Identify potential operational bottlenecks and areas for improvement.
 
-## 6. Recommendations
+[Timely Response Visualizations]
 
-Based on the insights and findings above, we would recommend the [stakeholder team] to consider the following:
+# Recommendations
 
-- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-- Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
+Based on the analytical findings, the following recommendations are intended for Bank of America's Customer Experience, Compliance, and Operations teams:
 
-## 7. Assumptions and Caveats
+- **Complaint Monitoring:** Establish regular monitoring of complaint volumes to identify unusual increases and emerging customer concerns.
+- **Product Improvement:** Prioritize financial products and recurring issues that contribute the highest complaint volumes.
+- **Resolution Quality:** Review common complaint resolution outcomes to identify opportunities to improve customer satisfaction and resolution practices.
+- **Response Efficiency:** Investigate products and operational areas associated with higher untimely response rates.
+- **Performance Monitoring:** Develop a complaint monitoring dashboard to track complaint volume, response timeliness, and resolution patterns.
 
-Throughout the analysis, multiple assumptions were made to manage challenges with the data. These assumptions and caveats are noted below:
+# Assumptions and Caveats
 
-- Assumption 1 (ex: missing country records were for customers based in the US, and were re-coded to be US citizens)
-- Assumption 1 (ex: data for December 2021 was missing - this was imputed using a combination of historical trends and December 2020 data)
-- Assumption 1 (ex: because 3% of the refund date column contained non-sensical dates, these were excluded from the analysis)
+- The analysis covers Bank of America consumer complaints submitted between 2017 and 2023.
+- Missing sub-product and sub-issue values are classified as `Not specified`, as not all products and issues require additional classifications.
+- Missing company public responses are classified as `No public response provided`. This does not necessarily indicate that the company failed to respond directly to the consumer.
+- The difference between `Date received` and `Date submitted` represents the interval between CFPB receipt and company referral, not the actual company response time.
+- Complaint status classifications are based on documented rules applied to the available response descriptions and should not be interpreted as independently verified resolution outcomes.
+- Complaint volume represents reported complaints, not necessarily the overall level of customer dissatisfaction among all Bank of America customers.
+- Observed relationships and patterns do not establish causation.
