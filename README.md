@@ -76,66 +76,112 @@ The prepared dataset supports temporal analysis, product comparisons, issue clas
 
 ### Overview of Findings
 
-[Summarize the three most important findings from the analysis in 2–3 sentences. Highlight the most significant complaint trends, dominant financial products or issues, and company response performance.]
+Between January and August 2023, total complaint volume reached 9,131 cases, remaining stable at 1,000–1,200 monthly complaints before experiencing a sharp 71.8% spike in July (1,749 cases) and subsequently dropping to a period low of 717 cases in August. The primary driver of customer friction is concentrated in Bank Accounts (4,085 complaints) and Customer Service & Account Management (3,586 complaints), with California, Florida, Texas, and New York accounting for over 46% of all submissions. Overall company performance remains strong with an 83.6% closure rate and 78% timely response rate, though Web submissions and Bank Account issues represent the highest absolute volume of delayed responses.
 
-![Dashboard](images/Dashboard.png)
+![Dashboard](images/dashboard.png)
 
 # Insights Deep Dive
 
 ### 1. Complaint Trends
 
-- **Main Insight 1:** Describe the annual complaint distribution and identify significant increases or decreases.
-- **Main Insight 2:** Identify monthly or quarterly complaint patterns.
-- **Main Insight 3:** Highlight periods with unusually high complaint volumes.
-- **Main Insight 4:** Explain potential business implications of the observed trends.
+![Annual Complaint Trends](images/complaints-trend.png)
 
-![Annual Complaint Trends](images/ComplaintsTrend.png)
+- **Core Trend:** Complaint volume remained relatively stable between 1,000 and 1,200 per month across Q1 and Q2 2023.
 
-![Monthly Complaint Trends](images/MonthlyComplaint.png)
+- **Peak Spike:** July 2023 saw an unusual surge, peaking at 1,749 complaints a **71.8% increase** from June (1,018 complaints).
 
-### 2. Product and Issue Analysis
+- **Sharp Drop:** Following the July peak, volume dropped by **59.0%** in August 2023 down to 717 complaints, hitting the lowest point of the period observed.
 
-- **Main Insight 1:** Identify the financial products with the highest complaint volumes.
-- **Main Insight 2:** Examine the most frequently reported issues within each major product.
-- **Main Insight 3:** Identify recurring customer dissatisfaction patterns.
-- **Main Insight 4:** Explain which products and issues require greater attention.
+### 2. Most Complained-About Products
 
-[Product and Issue Visualizations]
+![Annual Complaint Trends](images/product-complaints.png)
 
-### 3. Company Response Analysis
+- **Largest Untimely Volume:** **Bank Accounts** recorded the highest raw count of untimely responses ("No") at **256 complaints**, representing **49.0%** of all non-timely cases (256 out of 522).
 
-- **Main Insight 1:** Analyze the distribution of company response types.
-- **Main Insight 2:** Identify the most common complaint resolution outcomes.
-- **Main Insight 3:** Compare response patterns across financial products.
-- **Main Insight 4:** Highlight potential gaps in complaint-handling practices.
+- **Highest Untimely Rate (Proportional Risk):** While low in total volume, **Loans** has the highest untimely response rate at **11.5%** (3 out of 26), followed by **Debt Collection** at **6.2%** (15 out of 243) and **Bank Accounts** at **6.3%** (256 out of 4,085).
 
-[Company Response Visualizations]
+- **Highest On-Time Resolution:** **Mortgages** achieved the highest timely response rate ("Yes") at **86.4%** (310 out of 359), closely followed by **Money Transfer & Services** at **83.5%** (507 out of 607).
 
-### 4. Timely Response Analysis
+### 3. Issue Complaints
 
-- **Main Insight 1:** Evaluate the proportion of timely and untimely responses.
-- **Main Insight 2:** Identify products associated with higher untimely response counts.
-- **Main Insight 3:** Compare untimely responses across reported issues and states.
-- **Main Insight 4:** Identify potential operational bottlenecks and areas for improvement.
+![Annual Complaint Trends](images/issue-complaints.png)
 
-[Timely Response Visualizations]
+- **Highest Untimely Volume:** **Customer Service & Account Management** accounts for the highest raw count of untimely responses ("No") with **217 complaints**, representing **42.5%** of all non-timely cases (217 out of 510).
+
+- **Highest Relative Untimely Risk:** **Bank Accounts & Overdrafts** has the highest proportion of untimely responses at **8.5%** (15 out of 177), followed by **Credit Reporting** at **7.1%** (98 out of 1,382) and **Debt Collection** at **6.3%** (13 out of 207).
+
+- **Highest Timely Resolution:** **Mortgages & Home Loans** achieved the highest timely response rate ("Yes") at **83.2%** (153 out of 184), whereas **Bank Accounts & Overdrafts** had the lowest at **62.1%** (110 out of 177).
+
+### 4. Company Response Performance
+
+![Annual Complaint Trends](images/complaints-response.png)
+
+- **High Resolution Rate:** The vast majority of complaints (**84%**) have been resolved and closed.
+
+- **Active Backlog:** A minority share of **16%** of complaints remain actively in progress..
+
+### 5. Timely Response Rate
+
+![Annual Complaint Trends](images/resolution.png)
+
+- **Majority Timely Resolved:** The vast majority (**78%**) of complaints have been answered/resolved in a timely manner ("Yes").
+
+- **Pending Workload:** **16%** of complaints are currently pending resolution ("Pending").
+
+- **Untimely Responses:** A small fraction of **6%** were not addressed in a timely manner ("No").
+
+### 6. Geographic Distribution
+
+![Annual Complaint Trends](images/world-map.png)
+
+- **Top Volume States:** **California (CA)** leads by a massive margin with **1,827 complaints** (20.0% of total volume), followed by **Florida (FL)** with **995**, **Texas (TX)** with **749**, and **New York (NY)** with **633**.
+
+- **Geographic Concentration:** The top 4 states combined account for **4,204 complaints** (over **46%** of the 9,131 grand total), showing high concentration in heavily populated states.
+
+- **Low Volume States:** States like **South Dakota (SD)** and **Wyoming (WY)** recorded the lowest counts with just **2 complaints** each.
+
+### 6. Submitted Via Complaints
+
+| Channel         |   No    | Pending  |   Yes    |  Total   |
+| :-------------- | :-----: | :------: | :------: | :------: |
+| **Web**         |   473   |   1303   |   6188   |   7964   |
+| **Phone**       |   29    |   132    |   615    |   776    |
+| **Referral**    |   17    |    51    |   247    |   315    |
+| **Postal mail** |    3    |    8     |    65    |    76    |
+| **Total**       | **522** | **1494** | **7115** | **9131** |
+
+- **Dominant Channel:** **Web** is the primary submission method, accounting for **7,964 complaints** (**87.2%** of total volume).
+- **Highest Untimely Risk:** **Web** also generates the highest rate of non-timely responses ("No"), representing **90.6%** (473 out of 522) of all untimely complaints across channels.
+- **Consistent Timeliness across Channels:** Overall timeliness ("Yes") remains high at around **77% to 85%** across all submission methods, with **Postal mail** showing the highest timeliness rate (**85.5%**).
+
+Here is the tailored draft formatted cleanly for your presentation or final report document:
+
+---
 
 # Recommendations
 
-Based on the analytical findings, the following recommendations are intended for Bank of America's Customer Experience, Compliance, and Operations teams:
+Based on the analytical findings, the following strategic actions are recommended for Bank of America's Customer Experience, Compliance, and Operations teams:
 
-- **Complaint Monitoring:** Establish regular monitoring of complaint volumes to identify unusual increases and emerging customer concerns.
-- **Product Improvement:** Prioritize financial products and recurring issues that contribute the highest complaint volumes.
-- **Resolution Quality:** Review common complaint resolution outcomes to identify opportunities to improve customer satisfaction and resolution practices.
-- **Response Efficiency:** Investigate products and operational areas associated with higher untimely response rates.
-- **Performance Monitoring:** Develop a complaint monitoring dashboard to track complaint volume, response timeliness, and resolution patterns.
+- **Complaint Monitoring:** Establish automated early-warning monitoring of monthly complaint volumes to quickly detect unusual spikes and emerging customer pain points.
+
+- **Product & Issue Improvement:** Focus quality improvement initiatives directly on **Bank Accounts** and **Customer Service & Account Management**, which drive the vast majority of total customer friction.
+
+- **Resolution Quality:** Audit common resolution outcomes to enhance customer satisfaction, refine internal practices, and lower the backlog of pending cases.
+
+- **Response Efficiency:** Investigate operational bottlenecks within **Web submission channels** and **high-risk products/issues** to eliminate delayed, untimely responses.
+
+- **Performance Dashboarding:** Build an interactive tracking dashboard to monitor real-time complaint trends, channel-level timeliness, state distributions, and resolution performance.
+
+---
 
 # Assumptions and Caveats
 
-- The analysis covers Bank of America consumer complaints submitted between 2017 and 2023.
-- Missing sub-product and sub-issue values are classified as `Not specified`, as not all products and issues require additional classifications.
-- Missing company public responses are classified as `No public response provided`. This does not necessarily indicate that the company failed to respond directly to the consumer.
-- The difference between `Date received` and `Date submitted` represents the interval between CFPB receipt and company referral, not the actual company response time.
-- Complaint status classifications are based on documented rules applied to the available response descriptions and should not be interpreted as independently verified resolution outcomes.
-- Complaint volume represents reported complaints, not necessarily the overall level of customer dissatisfaction among all Bank of America customers.
-- Observed relationships and patterns do not establish causation.
+- **Timeframe Coverage:** The underlying dataset covers Bank of America consumer complaints submitted from 2017 through 2023.
+
+- **Unspecified Classifications:** Missing sub-product and sub-issue entries are categorized as `Not specified`, reflecting instances where sub-classifications were not applicable or reported.
+- **Public Responses:** Missing company public responses are recorded as `No public response provided`, which indicates an absence of public commentary rather than a failure to respond directly to the consumer.
+- **Submission Intervals:** The duration between `Date received` and `Date submitted` measures the transmission interval from CFPB receipt to company referral, not the company's internal handling time.
+- **Status Rules:** Complaint status classifications are based on standardized rule mappings of response descriptions rather than independently audited outcome verifications.
+- **Sample Representativeness:** Complaint counts represent formal CFPB filings and serve as a proxy for customer friction rather than a census of total customer dissatisfaction across all accounts.
+
+- **Analytical Scope:** Observed correlations and patterns highlight operational focus areas but do not inherently prove direct causality.
