@@ -78,7 +78,15 @@ The prepared dataset supports temporal analysis, product comparisons, issue clas
 
 Between January and August 2023, total complaint volume reached 9,131 cases, remaining stable at 1,000–1,200 monthly complaints before experiencing a sharp 71.8% spike in July (1,749 cases) and subsequently dropping to a period low of 717 cases in August. The primary driver of customer friction is concentrated in Bank Accounts (4,085 complaints) and Customer Service & Account Management (3,586 complaints), with California, Florida, Texas, and New York accounting for over 46% of all submissions. Overall company performance remains strong with an 83.6% closure rate and 78% timely response rate, though Web submissions and Bank Account issues represent the highest absolute volume of delayed responses.
 
-![Dashboard](images/dashboard.png)
+### Dashboard
+
+![dashboard](images/dashboard.png)
+
+The Video interactive dashboard can be found [here](https://drive.google.com/file/d/1FjpmM9RbKXqZfwlWRQULeD8Lc6RGBnoV/view?usp=sharing)
+
+The Presentation slides can be found [here](https://docs.google.com/presentation/d/1MzA0NcJ_Gy-ZucD7ccxrqREYmx8ek2qM/edit?usp=sharing&ouid=114150187847434890312&rtpof=true&sd=true)
+
+The Brief project can be found [here](https://docs.google.com/document/d/1b5swpvRKZlnClwrqJiQujOx_FLEmT9B2/edit?usp=sharing&ouid=114150187847434890312&rtpof=true&sd=true)
 
 # Insights Deep Dive
 
