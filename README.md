@@ -126,8 +126,8 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **High Resolution Rate:** The vast majority of complaints (**84%**) have been resolved and closed.
 
-- **Active Backlog:** A minority share of **16%** of complaints remain actively in progress..
-
+- **Active Backlog:** A minority share of **16%** of complaints remain actively in progress.
+  
 ### 5. Timely Response Rate
 
 ![Annual Complaint Trends](images/resolution.png)
@@ -148,7 +148,7 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **Low Volume States:** States like **South Dakota (SD)** and **Wyoming (WY)** recorded the lowest counts with just **2 complaints** each.
 
-### 6. Submitted Via Complaints
+### 7. Submitted Via Complaints
 
 | Channel         |   No    | Pending  |   Yes    |  Total   |
 | :-------------- | :-----: | :------: | :------: | :------: |
