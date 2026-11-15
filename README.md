@@ -84,7 +84,7 @@ Between January and August 2023, total complaint volume reached 9,131 cases, rem
 
 The Video interactive dashboard can be found [here](https://drive.google.com/file/d/1FjpmM9RbKXqZfwlWRQULeD8Lc6RGBnoV/view?usp=sharing)
 
-The Presentation slides can be found [here](https://docs.google.com/presentation/d/1MzA0NcJ_Gy-ZucD7ccxrqREYmx8ek2qM/edit?usp=sharing&ouid=114150187847434890312&rtpof=true&sd=true)
+The Presentation slides can be found [here](https://docs.google.com/presentation/d/1pvmLhxUX7YFAiYhBU4EB5sRK51rTdY3I/edit?usp=sharing&ouid=114150187847434890312&rtpof=true&sd=true)
 
 The Brief project can be found [here](https://docs.google.com/document/d/1b5swpvRKZlnClwrqJiQujOx_FLEmT9B2/edit?usp=sharing&ouid=114150187847434890312&rtpof=true&sd=true)
 
