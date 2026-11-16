@@ -202,34 +202,30 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 💡 **Why it matters:** Web is both the dominant channel (87% of volume) and the riskiest for delays. Since digital submissions are likely the easiest to automate and triage, this is a high-leverage opportunity — improving the web complaint pipeline would reduce untimely responses across the majority of all cases.
 
-# Recommendations
+# Recommendations:
 
-Based on the analytical findings, the following strategic actions are recommended for Bank of America's Customer Experience, Compliance, and Operations teams:
+Based on the insights and findings above, we would recommend the Customer Experience, Compliance, and Operations teams at Bank of America to consider the following:
 
-- **Complaint Monitoring:** Establish automated early-warning monitoring of monthly complaint volumes to quickly detect unusual spikes and emerging customer pain points.
+- Complaints spiked 71.8% in July 2023 compared to June, then dropped sharply the following month. **Set up automated monitoring to flag unusual month-over-month complaint spikes early, so the root cause can be investigated before it repeats.**
 
-- **Product & Issue Improvement:** Focus quality improvement initiatives directly on **Bank Accounts** and **Customer Service & Account Management**, which drive the vast majority of total customer friction.
+- Bank Accounts generated the highest complaint volume (4,085) and the highest number of untimely responses (256). **Prioritize process improvements for Bank Account services, as this product category has the largest impact on both complaint volume and response delays.**
 
-- **Resolution Quality:** Audit common resolution outcomes to enhance customer satisfaction, refine internal practices, and lower the backlog of pending cases.
+- Customer Service & Account Management issues accounted for the highest number of untimely responses (217, or 42.5% of all delayed cases). **Review staffing, training, and workflow processes within Customer Service, since this is an internal bottleneck that can be addressed directly.**
 
-- **Response Efficiency:** Investigate operational bottlenecks within **Web submission channels** and **high-risk products/issues** to eliminate delayed, untimely responses.
+- Web submissions made up 87.2% of total complaint volume and 90.6% of all untimely responses. **Focus digital process improvements on the Web complaint channel first, as fixing it would reduce delays across the largest share of all cases.**
 
-- **Performance Dashboarding:** Build an interactive tracking dashboard to monitor real-time complaint trends, channel-level timeliness, state distributions, and resolution performance.
+- California, Florida, Texas, and New York together accounted for over 46% of all complaints. **Pilot operational improvements in these four states first, as targeted action here will have the broadest impact relative to effort.**
 
-**Note:** Because CFPB complaint volume is a proxy for customer friction rather than a full census (see Assumptions below), these recommendations should be validated against Bank of America's internal complaint and service logs before implementation.
+# Assumptions and Caveats:
 
-# Assumptions and Caveats
+Throughout the analysis, multiple assumptions were made to manage challenges with the data. These assumptions and caveats are noted below:
 
-- **Timeframe Coverage:** The underlying dataset covers Bank of America consumer complaints submitted from 2017 through 2023.
+- Missing sub-product and sub-issue entries were recoded as "Not specified," assuming these reflect cases where no sub-classification applied or was reported, rather than data entry errors.
 
-- **Unspecified Classifications:** Missing sub-product and sub-issue entries are categorized as `Not specified`, reflecting instances where sub-classifications were not applicable or reported.
+- Missing company public response values were recoded as "No public response provided," assuming this reflects an absence of public commentary rather than a failure to respond to the consumer directly.
 
-- **Public Responses:** Missing company public responses are recorded as `No public response provided`, which indicates an absence of public commentary rather than a failure to respond directly to the consumer.
+- Complaint status (e.g., closed, pending) was derived using standardized rule mappings based on response description text, assuming these mappings accurately reflect the true outcome of each complaint.
 
-- **Submission Intervals:** The duration between `Date received` and `Date submitted` measures the transmission interval from CFPB receipt to company referral, not the company's internal handling time.
+- The interval between "Date received" and "Date submitted" was assumed to represent only the CFPB-to-company referral time, not the company's actual internal handling or resolution time.
 
-- **Status Rules:** Complaint status classifications are based on standardized rule mappings of response descriptions rather than independently audited outcome verifications.
-
-- **Sample Representativeness:** Complaint counts represent formal CFPB filings and serve as a proxy for customer friction rather than a census of total customer dissatisfaction across all accounts.
-
-- **Analytical Scope:** Observed correlations and patterns highlight operational focus areas but do not inherently prove direct causality.
+- Complaint volume was treated as a proxy for customer dissatisfaction, assuming it reasonably represents broader friction trends even though it does not capture every dissatisfied customer who did not file a formal complaint.
