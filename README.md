@@ -2,6 +2,20 @@
 
 An end-to-end data analytics project using Microsoft Excel to analyze Bank of America's consumer complaints from 2017 to 2023. The project aims to identify complaint trends, understand recurring financial product issues, evaluate company response patterns, and provide actionable recommendations to improve customer experience and operational performance.
 
+**Jump to:**
+
+1. [Why This Matters](#why-this-matters)
+2. [Project Background](#project-background)
+3. [Data Structure](#data-structure--initial-checks)
+4. [Executive Summary](#executive-summary)
+5. [Insights Deep Dive](#insights-deep-dive)
+6. [Recommendations](#recommendations)
+7. [Assumptions & Caveats](#assumptions-and-caveats)
+
+# Why This Matters
+
+Consumer complaints are a direct signal of where a company's products, service, or processes are breaking down. For a bank the size of Bank of America, even a small percentage shift in complaint volume represents thousands of frustrated customers — and a compliance risk with regulators like the CFPB. This project turns raw complaint data into a clear view of _where_ friction is happening, _how fast_ it's being resolved, and _what_ should be prioritized next.
+
 # Project Background
 
 Bank of America operates in the financial services industry, serving consumers through various financial products, including checking and savings accounts, credit cards, mortgages, and loans.
@@ -31,6 +45,8 @@ This project analyzes consumer complaints submitted between 2017 and 2023 to ide
 **Data Source:** Consumer Financial Protection Bureau (CFPB)
 
 **Analysis Period:** 2017–2023
+
+**Note on Scope:** The underlying dataset spans 2017–2023. However, the detailed metrics in this report — including the 9,131-case total and monthly trend analysis — reflect the January–August 2023 window, the period with the most complete and granular data available for deep-dive analysis.
 
 # Data Structure & Initial Checks
 
@@ -70,6 +86,13 @@ Data cleaning and transformation were performed using Microsoft Excel. The prepa
 - Calculating the interval between CFPB complaint receipt and company referral.
 - Creating derived complaint status classifications based on documented response rules.
 
+**Key Formulas & Techniques Used:**
+
+- `IF` / nested `IF` statements to classify derived complaint status from response-description text.
+- `DATEDIF` to calculate the interval between CFPB receipt and company referral.
+- `PivotTables` for cross-tabulating Product × Timeliness, State × Volume, and Channel × Response status.
+- Conditional formatting and slicers to support dashboard interactivity.
+
 The prepared dataset supports temporal analysis, product comparisons, issue classification, geographical analysis, and company response evaluation.
 
 # Executive Summary
@@ -80,7 +103,9 @@ Between January and August 2023, total complaint volume reached 9,131 cases, rem
 
 ### Dashboard
 
-![dashboard](images/dashboard.png)
+![dashboard](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/dashboard.png)
+
+**How to read this dashboard:** The top cards show total complaint volume, closure rate, and timely-response rate at a glance. The center chart tracks monthly complaint trends, while the side panels break volume down by product, state, and submission channel. Use the filters to isolate a specific product or time period.
 
 The Video interactive dashboard can be found [here](https://drive.google.com/file/d/1FjpmM9RbKXqZfwlWRQULeD8Lc6RGBnoV/view?usp=sharing)
 
@@ -92,7 +117,7 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 ### 1. Complaint Trends
 
-![Annual Complaint Trends](images/complaints-trend.png)
+![Monthly Complaint Trend](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/complaints-trend.png)
 
 - **Core Trend:** Complaint volume remained relatively stable between 1,000 and 1,200 per month across Q1 and Q2 2023.
 
@@ -100,9 +125,11 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **Sharp Drop:** Following the July peak, volume dropped by **59.0%** in August 2023 down to 717 complaints, hitting the lowest point of the period observed.
 
+💡 **Why it matters:** A 71.8% spike in a single month suggests a specific trigger - a policy change, system issue, or external event - rather than normal fluctuation. Identifying the root cause of July's surge could prevent similar spikes from recurring and reduce regulatory scrutiny tied to sudden volume increases.
+
 ### 2. Most Complained-About Products
 
-![Annual Complaint Trends](images/product-complaints.png)
+![Product Complaint Volume & Timeliness](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/product-complaints.png)
 
 - **Largest Untimely Volume:** **Bank Accounts** recorded the highest raw count of untimely responses ("No") at **256 complaints**, representing **49.0%** of all non-timely cases (256 out of 522).
 
@@ -110,27 +137,32 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **Highest On-Time Resolution:** **Mortgages** achieved the highest timely response rate ("Yes") at **86.4%** (310 out of 359), closely followed by **Money Transfer & Services** at **83.5%** (507 out of 607).
 
+💡 **Why it matters:** Bank Accounts drive both the highest complaint volume and the highest raw count of untimely responses. This combination makes it the single biggest lever for improving overall customer experience — fixing issues here would have a larger impact than addressing any other product category.
+
 ### 3. Issue Complaints
 
-![Annual Complaint Trends](images/issue-complaints.png)
+![Issue Category Breakdown](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/issue-complaints.png)
 
 - **Highest Untimely Volume:** **Customer Service & Account Management** accounts for the highest raw count of untimely responses ("No") with **217 complaints**, representing **42.5%** of all non-timely cases (217 out of 510).
-
 - **Highest Relative Untimely Risk:** **Bank Accounts & Overdrafts** has the highest proportion of untimely responses at **8.5%** (15 out of 177), followed by **Credit Reporting** at **7.1%** (98 out of 1,382) and **Debt Collection** at **6.3%** (13 out of 207).
 
 - **Highest Timely Resolution:** **Mortgages & Home Loans** achieved the highest timely response rate ("Yes") at **83.2%** (153 out of 184), whereas **Bank Accounts & Overdrafts** had the lowest at **62.1%** (110 out of 177).
 
+💡 **Why it matters:** Customer Service & Account Management issues account for over 42% of all delayed responses. Since this is an internal process (not a product defect), it's one of the most directly fixable pain points — likely tied to staffing, training, or workflow bottlenecks rather than external factors.
+
 ### 4. Company Response Performance
 
-![Annual Complaint Trends](images/complaints-response.png)
+![Company Response Status](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/complaints-response.png)
 
 - **High Resolution Rate:** The vast majority of complaints (**84%**) have been resolved and closed.
 
 - **Active Backlog:** A minority share of **16%** of complaints remain actively in progress.
-  
+
+  💡 **Why it matters:** A 16% active backlog means roughly 1 in 6 complaints is still unresolved. If this backlog grows faster than it's cleared, it compounds over time — turning a manageable queue into a systemic delay problem that affects customer trust and regulatory standing.
+
 ### 5. Timely Response Rate
 
-![Annual Complaint Trends](images/resolution.png)
+![Timely Response Rate](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/resolution.png)
 
 - **Majority Timely Resolved:** The vast majority (**78%**) of complaints have been answered/resolved in a timely manner ("Yes").
 
@@ -138,9 +170,11 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **Untimely Responses:** A small fraction of **6%** were not addressed in a timely manner ("No").
 
+💡 **Why it matters:** While 6% seems small, untimely responses carry outsized regulatory risk under CFPB rules — timeliness violations can trigger compliance reviews regardless of overall resolution quality. Tracking this metric closely protects the company from risk that isn't proportional to its size.
+
 ### 6. Geographic Distribution
 
-![Annual Complaint Trends](images/world-map.png)
+![Geographic Distribution of Complaints](https://muchammadwr.github.io/consumer-financial-protection-bureau/images/world-map.png)
 
 - **Top Volume States:** **California (CA)** leads by a massive margin with **1,827 complaints** (20.0% of total volume), followed by **Florida (FL)** with **995**, **Texas (TX)** with **749**, and **New York (NY)** with **633**.
 
@@ -148,23 +182,25 @@ The Brief project can be found [here](https://docs.google.com/document/d/1b5swpv
 
 - **Low Volume States:** States like **South Dakota (SD)** and **Wyoming (WY)** recorded the lowest counts with just **2 complaints** each.
 
+💡 **Why it matters:** Nearly half of all complaints originate from just 4 states. This means targeted regional interventions — rather than broad nationwide changes — could resolve a disproportionate share of total complaint volume more efficiently.
+
 ### 7. Submitted Via Complaints
 
-| Channel         |   No    | Pending  |   Yes    |  Total   |
-| :-------------- | :-----: | :------: | :------: | :------: |
-| **Web**         |   473   |   1303   |   6188   |   7964   |
-| **Phone**       |   29    |   132    |   615    |   776    |
-| **Referral**    |   17    |    51    |   247    |   315    |
-| **Postal mail** |    3    |    8     |    65    |    76    |
-| **Total**       | **522** | **1494** | **7115** | **9131** |
+| Channel         | No      | Pending   | Yes       | Total     | % Timely |
+| --------------- | ------- | --------- | --------- | --------- | -------- |
+| **Web**         | 473     | 1,303     | 6,188     | 7,964     | 77.7%    |
+| **Phone**       | 29      | 132       | 615       | 776       | 79.3%    |
+| **Referral**    | 17      | 51        | 247       | 315       | 78.4%    |
+| **Postal mail** | 3       | 8         | 65        | 76        | 85.5%    |
+| **Total**       | **522** | **1,494** | **7,115** | **9,131** | —        |
 
 - **Dominant Channel:** **Web** is the primary submission method, accounting for **7,964 complaints** (**87.2%** of total volume).
+
 - **Highest Untimely Risk:** **Web** also generates the highest rate of non-timely responses ("No"), representing **90.6%** (473 out of 522) of all untimely complaints across channels.
+
 - **Consistent Timeliness across Channels:** Overall timeliness ("Yes") remains high at around **77% to 85%** across all submission methods, with **Postal mail** showing the highest timeliness rate (**85.5%**).
 
-Here is the tailored draft formatted cleanly for your presentation or final report document:
-
----
+💡 **Why it matters:** Web is both the dominant channel (87% of volume) and the riskiest for delays. Since digital submissions are likely the easiest to automate and triage, this is a high-leverage opportunity — improving the web complaint pipeline would reduce untimely responses across the majority of all cases.
 
 # Recommendations
 
@@ -180,16 +216,20 @@ Based on the analytical findings, the following strategic actions are recommende
 
 - **Performance Dashboarding:** Build an interactive tracking dashboard to monitor real-time complaint trends, channel-level timeliness, state distributions, and resolution performance.
 
----
+**Note:** Because CFPB complaint volume is a proxy for customer friction rather than a full census (see Assumptions below), these recommendations should be validated against Bank of America's internal complaint and service logs before implementation.
 
 # Assumptions and Caveats
 
 - **Timeframe Coverage:** The underlying dataset covers Bank of America consumer complaints submitted from 2017 through 2023.
 
 - **Unspecified Classifications:** Missing sub-product and sub-issue entries are categorized as `Not specified`, reflecting instances where sub-classifications were not applicable or reported.
+
 - **Public Responses:** Missing company public responses are recorded as `No public response provided`, which indicates an absence of public commentary rather than a failure to respond directly to the consumer.
+
 - **Submission Intervals:** The duration between `Date received` and `Date submitted` measures the transmission interval from CFPB receipt to company referral, not the company's internal handling time.
+
 - **Status Rules:** Complaint status classifications are based on standardized rule mappings of response descriptions rather than independently audited outcome verifications.
+
 - **Sample Representativeness:** Complaint counts represent formal CFPB filings and serve as a proxy for customer friction rather than a census of total customer dissatisfaction across all accounts.
 
 - **Analytical Scope:** Observed correlations and patterns highlight operational focus areas but do not inherently prove direct causality.
